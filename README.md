@@ -1,0 +1,4 @@
+Gallery
+=======
+
+Thelia modules - Gallery

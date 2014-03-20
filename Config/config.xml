@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<config xmlns="http://thelia.net/schema/dic/config"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://thelia.net/schema/dic/config http://thelia.net/schema/dic/config/thelia-1.0.xsd">
+        
+    <parameters>
+        <parameter key="gallery_types" type="collection">
+            <parameter key="product">Product</parameter>
+            <parameter key="category">Category</parameter>
+            <parameter key="folder">Folder</parameter>
+            <parameter key="content">Content</parameter>
+        </parameter>
+    </parameters>
+        
+    <loops>
+        <loop class="Gallery\Loop\Gallery" name="gallery" />
+        <loop class="Gallery\Loop\GalleryImage" name="gallery_image" />
+    </loops>
+
+    <forms>
+        <form class="Gallery\Form\GalleryCreationForm" name="admin.gallery.creation" />
+        <form class="Gallery\Form\GalleryModificationForm" name="admin.gallery.modification" />
+        <form class="Gallery\Form\GalleryImageModificationForm" name="admin.gallery.image.modification" />
+    </forms>
+
+    <commands>
+        <!--
+        <command class="MyModule\Command\MySuperCommand" />
+        -->
+    </commands>
+
+    <services>
+        <service id="gallery.action" class="Gallery\Action\Gallery">
+            <tag name="kernel.event_subscriber"/>
+        </service>
+        <service id="gallery.action.image" class="Gallery\Action\GalleryImage">
+            <tag name="kernel.event_subscriber"/>
+        </service>
+        <service id="gallery.form.type.gallery_type" class="Gallery\Form\Type\GalleryType">
+            <argument>%gallery_types%</argument>
+            <tag name="form.type" alias="gallery_type" />
+        </service>
+    </services>
+    
+</config>

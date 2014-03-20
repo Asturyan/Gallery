@@ -1,0 +1,65 @@
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <!-- Route to administration base -->
+    <route id="admin.gallery.default" path="/admin/module/Gallery">
+        <default key="_controller">Gallery\Controller\Admin\GalleryController::defaultAction</default>
+    </route>
+    <route id="admin.gallery.create" path="/admin/module/Gallery/create">
+        <default key="_controller">Gallery\Controller\Admin\GalleryController::createAction</default>
+    </route>
+    <route id="admin.gallery.update" path="/admin/module/Gallery/update">
+        <default key="_controller">Gallery\Controller\Admin\GalleryController::updateAction</default>
+    </route>
+    <route id="admin.gallery.save" path="/admin/module/Gallery/save">
+        <default key="_controller">Gallery\Controller\Admin\GalleryController::processUpdateAction</default>
+    </route>
+    <route id="admin.gallery.set-default" path="/admin/module/Gallery/toggle-online">
+        <default key="_controller">Gallery\Controller\Admin\GalleryController::setToggleVisibilityAction</default>
+    </route>
+    <route id="admin.gallery.delete" path="/admin/module/Gallery/delete">
+        <default key="_controller">Gallery\Controller\Admin\GalleryController::deleteAction</default>
+    </route>
+    <route id="admin.gallery.update-position" path="/admin/module/Gallery/update-position">
+        <default key="_controller">Gallery\Controller\Admin\GalleryController::updatePositionAction</default>
+    </route>
+    
+    <route id="admin.gallery.image.save-ajax" path="/admin/module/Gallery/image/{parentId}/save-ajax">
+        <default key="_controller">Gallery\Controller\Admin\ImageController::saveImageAjaxAction</default>
+        <requirement key="parentId">\d+</requirement>
+    </route>
+    <route id="admin.gallery.image.form-ajax" path="/admin/module/Gallery/image/{parentId}/form-ajax">
+        <default key="_controller">Gallery\Controller\Admin\ImageController::getImageFormAjaxAction</default>
+        <requirement key="parentId">\d+</requirement>
+    </route>
+    <route id="admin.gallery.image.list-ajax" path="/admin/module/Gallery/image/{parentId}/list-ajax">
+        <default key="_controller">Gallery\Controller\Admin\ImageController::getImageListAjaxAction</default>
+        <requirement key="parentId">\d+</requirement>
+    </route>
+    <route id="admin.gallery.image.update-position" path="/admin/module/Gallery/image/{parentId}/update-position">
+        <default key="_controller">Gallery\Controller\Admin\ImageController::updateImagePositionAction</default>
+        <requirement key="parentId">\d+</requirement>
+    </route>
+    <route id="admin.gallery.image.update.view" path="/admin/module/Gallery/image/{imageId}/update" methods="get">
+        <default key="_controller">Gallery\Controller\Admin\ImageController::viewImageAction</default>
+        <requirement key="imageId">\d+</requirement>
+    </route>
+    <route id="admin.gallery.image.update.process" path="/admin/module/Gallery/image/{imageId}/update" methods="post">
+        <default key="_controller">Gallery\Controller\Admin\ImageController::updateImageAction</default>
+        <requirement key="imageId">\d+</requirement>
+    </route>
+    <route id="admin.gallery.image.delete" path="/admin/module/Gallery/image/delete/{imageId}">
+        <default key="_controller">Gallery\Controller\Admin\ImageController::deleteImageAction</default>
+        <requirement key="imageId">\d+</requirement>
+    </route>
+    <route id="admin.gallery.image.type-content" path="/admin/module/Gallery/image/available-types/{type}.{_format}" methods="GET">
+        <default key="_controller">Gallery\Controller\Admin\ImageController::getAvailableTypesAction</default>
+        <requirement key="_format">xml|json</requirement>
+    </route>
+    <route id="admin.gallery.image.subtype-content" path="/admin/module/Gallery/image/available-subtypes/{parent}/{parentId}/{type}.{_format}" methods="GET">
+        <default key="_controller">Gallery\Controller\Admin\ImageController::getAvailableSubTypesAction</default>
+        <requirement key="parentId">\d+</requirement>
+        <requirement key="_format">xml|json</requirement>
+    </route>
+</routes>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database defaultIdMethod="native" name="thelia" namespace="Gallery\Model">
+    <!--
+    See propel documentation on http://propelorm.org for all information about schema file
+    -->
+    <table name="gallery">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="title" type="varchar" />
+        <column name="description" type="CLOB" required="true" />
+        <column name="visible" type="tinyint" required="true" />
+        <column name="position" type="integer" required="true" />
+        <behavior name="timestampable" />
+        <behavior name="i18n">
+            <parameter name="i18n_columns" value="title, description" />
+        </behavior>
+        <vendor type="mysql">
+            <parameter name="Engine" value="InnoDB"/>
+            <parameter name="Charset" value="utf8"/>
+      </vendor>
+    </table>
+    <table name="gallery_image">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="title" type="varchar" />
+        <column name="description" type="CLOB" required="true" />
+        <column name="gallery_id" type="integer" required="true" />
+        <column name="file" type="varchar" />
+        <column name="type" type="varchar" required="true" defaultValue="" />
+        <column name="subtype_id" type="integer" required="true" defaultValue="0" />
+        <column name="type_id" type="integer" required="true" defaultValue="0" />
+        <column name="url" type="varchar" />
+        <column name="position" type="integer" required="true" />
+        <column name="visible" type="tinyint" required="true" />
+        <behavior name="timestampable" />
+        <behavior name="i18n">
+            <parameter name="i18n_columns" value="title, description" />
+        </behavior>
+        <foreign-key foreignTable="gallery" onUpdate="RESTRICT" onDelete="CASCADE">
+            <reference local="gallery_id" foreign="id"/>
+        </foreign-key>
+        <vendor type="mysql">
+            <parameter name="Engine" value="InnoDB"/>
+            <parameter name="Charset" value="utf8"/>
+        </vendor>
+    </table>
+    <external-schema filename="local/config/schema.xml" referenceOnly="true" />
+</database>

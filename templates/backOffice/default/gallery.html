@@ -1,0 +1,317 @@
+{extends file="admin-layout.tpl"}
+
+{block name="page-title"}{intl l='Gallery'}{/block}
+
+{block name="check-resource"}module.Gallery{/block}
+{block name="check-access"}view{/block}
+
+{block name="main-content"}
+<div class="modules">
+
+    <div id="wrapper" class="container">
+
+        <div class="clearfix">
+            <ul class="breadcrumb pull-left">
+                <li><a href="{url path='/admin/home'}">{intl l="Home"}</a></li>
+                <li><a href="{url path='/admin/modules'}">{intl l="Modules"}</a></li>
+                <li><a href="#">{intl l="Gallery"}</a></li>
+            </ul>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="general-block-decorator">
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-condensed" id="gallery_list">
+                            <caption>
+                                {intl l="Galleries List"}
+
+                                 {loop type="auth" name="can_create" role="ADMIN" resource="admin.gallery" access="CREATE"}
+                                 <a class="btn btn-default btn-primary action-btn" title="{intl l='Add a new gallery'}" href="#gallery_creation_dialog" data-toggle="modal">
+                                     <span class="glyphicon glyphicon-plus-sign"></span>
+                                 </a>
+                                 {/loop}
+                             </caption>
+
+                             {ifloop rel="gallery"}
+                                 <thead>
+                                     <tr>
+                                         <th class="object-title">
+                                         {admin_sortable_header
+                                            current_order=$gallery_order
+                                            order='id'
+                                            reverse_order='id_reverse'
+                                            path={url path='/admin/module/Gallery'}
+                                            request_parameter_name='gallery_order'
+                                            label="{intl l='ID'}"
+                                         }
+                                         </th>
+
+                                         <th class="object-image">&nbsp;</th>
+
+                                         <th class="object-title">
+                                         {admin_sortable_header
+                                            current_order=$gallery_order
+                                            order='alpha'
+                                            reverse_order='alpha_reverse'
+                                            path={url path='/admin/module/Gallery'}
+                                            request_parameter_name='gallery_order'
+                                            label="{intl l='Gallery title'}"
+                                         }
+                                         </th>
+
+                                         <th>
+                                         {admin_sortable_header
+                                            current_order=$gallery_order
+                                            order='visible'
+                                            reverse_order='visible_reverse'
+                                            path={url path='/admin/module/Gallery'}
+                                            request_parameter_name='gallery_order'
+                                            label="{intl l='Online'}"
+                                         }
+                                         </th>
+
+                                         <th>
+                                         {admin_sortable_header
+                                            current_order=$gallery_order
+                                            order='manual'
+                                            reverse_order='manual_reverse'
+                                            path={url path='/admin/module/Gallery'}
+                                            request_parameter_name='gallery_order'
+                                            label="{intl l='Position'}"
+                                         }
+                                         </th>
+
+                                         <th class="actions">{intl l='Actions'}</th>
+                                     </tr>
+                                 </thead>
+
+                                 <tbody>
+                                 {loop type="gallery" name="gallery" visible="*" order=$gallery_order backend_context="1" lang=$lang_id}
+                                 <tr>
+                                     <td>{$ID}</td>
+
+                                     <td>
+                                     </td>
+
+                                     <td class="object-title">
+                                          <a href="{url path='admin/module/Gallery/update' gallery_id=$ID}" title="{intl l='Edit this gallery'}">
+                                            {$TITLE}
+                                          </a>
+                                     </td>
+
+                                     <td>
+                                         {loop type="auth" name="can_change" role="ADMIN" resource="admin.gallery" access="UPDATE"}
+                                             <div class="make-switch switch-small galleryVisibleToggle" data-id="{$ID}"  data-on="success" data-off="danger" data-on-label="<i class='glyphicon glyphicon-ok'></i>" data-off-label="<i class='glyphicon glyphicon-remove'></i>">
+                                                 <input type="checkbox" class="galleryVisibleToggle" {if $VISIBLE == 1}checked="checked"{/if}>
+                                             </div>
+                                         {/loop}
+
+                                         {elseloop rel="can_change"}
+                                             <div class="make-switch switch-small" data-on="success" data-off="danger" data-on-label="<i class='glyphicon glyphicon-ok'></i>" data-off-label="<i class='glyphicon glyphicon-remove'></i>">
+                                                 <input type="checkbox" class="disabled" disabled="disabled" {if $VISIBLE == 1}checked="checked"{/if}>
+                                             </div>
+                                         {/elseloop}
+                                     </td>
+
+                                     <td>
+                                     {admin_position_block
+                                         resource="admin.gallery"
+                                         access="update"
+                                         path={url path='admin/module/Gallery/update-position' gallery_id=$ID}
+                                         url_parameter="gallery_id"
+                                         in_place_edit_class="galleryPositionChange"
+                                         position=$POSITION
+                                         id=$ID
+                                      }
+                                     </td>
+
+                                     <td class="actions">
+                                         <div class="btn-group">
+                                             {loop type="auth" name="can_change" role="ADMIN" resource="admin.gallery" access="UPDATE"}
+                                                <a class="btn btn-default btn-xs" title="{intl l='Edit this gallery'}" href="{url path='/admin/module/Gallery/update' gallery_id=$ID}"><i class="glyphicon glyphicon-edit"></i></a>
+                                             {/loop}
+
+                                             {loop type="auth" name="can_delete" role="ADMIN" resource="admin.gallery" access="DELETE"}
+                                                <a class="btn btn-default btn-xs gallery-delete" title="{intl l='Delete this gallery and all its contents'}"  href="#gallery_delete_dialog" data-id="{$ID}" data-toggle="modal"><i class="glyphicon glyphicon-trash"></i></a>
+                                             {/loop}
+                                         </div>
+                                      </td>
+                                 </tr>
+                                 {/loop}
+                                 </tbody>
+                             {/ifloop}
+
+                             {elseloop rel="gallery"}
+                             <thead>
+                                 <tr>
+                                     <td class="message">
+                                         <div class="alert alert-info">
+                                         {loop type="auth" name="can_create" role="ADMIN" resource="admin.gallery" access="CREATE"}
+                                             {intl l="No gallery exists. To create a new one, click the + button above."}
+                                         {/loop}
+
+                                         {elseloop rel="can_create"}
+                                            {intl l="No gallery exists."}
+                                         {/elseloop}
+                                         </div>
+                                     </td>
+                                 </tr>
+                             </thead>
+                             {/elseloop}
+                         </table>
+                     </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{* -- Adding a new gallery ------------------------------------------------- *}
+
+{form name="admin.gallery.creation"}
+
+    {* Capture the dialog body, to pass it to the generic dialog *}
+    {capture "gallery_creation_dialog"}
+
+        {form_hidden_fields form=$form}
+
+        {form_field form=$form field='success_url'}
+           {* on success, redirect to the edition page, _ID_ is replaced with the created object ID, see controller  *}
+           <input type="hidden" name="{$name}" value="{url path='/admin/module/Gallery/update' gallery_id='_ID_'}" />
+        {/form_field}
+
+        {form_field form=$form field='title'}
+            <div class="form-group {if $error}has-error{/if}">
+                <label for="{$label_attr.for}" class="control-label">{$label} : </label>
+                {loop type="lang" name="default-lang" default_only="1"}
+                    <div class="input-group">
+                        <input type="text" id="{$label_attr.for}" required="required" name="{$name}" class="form-control" value="{$value}" title="{intl l='Category title'}" placeholder="{intl l='Name'}">
+                        <span class="input-group-addon"><img src="{image file="assets/img/flags/{$CODE}.png"}" alt="{$TITLE}" /></span>
+                    </div>
+
+                    <div class="help-block">{intl l='Enter here the gallery name in the default language (%title)' title="$TITLE"}</div>
+
+                    {* Switch edition to the current locale *}
+                    <input type="hidden" name="edit_language_id" value="{$ID}" />
+
+                    {form_field form=$form field='locale'}
+                        <input type="hidden" name="{$name}" value="{$LOCALE}" />
+                    {/form_field}
+                {/loop}
+            </div>
+        {/form_field}
+
+        {form_field form=$form field='visible'}
+            <div class="form-group {if $error}has-error{/if}">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="{$label_attr.for}" name="{$name}" value="1" checked="checked">
+                        {$label}
+                    </label>
+                </div>
+            </div>
+        {/form_field}
+
+    {/capture}
+
+    {include
+        file = "includes/generic-create-dialog.html"
+
+        dialog_id    = "gallery_creation_dialog"
+        dialog_title = {intl l="Create a new gallery"}
+        dialog_body  = {$smarty.capture.gallery_creation_dialog nofilter}
+
+        dialog_ok_label     = {intl l="Create this gallery"}
+
+        form_action        = {url path='/admin/module/Gallery/create'}
+        form_enctype       = {form_enctype form=$form}
+        form_error_message = $form_error_message
+    }
+{/form}
+
+{* -- Delete gallery confirmation dialog ----------------------------------- *}
+
+{capture "gallery_delete_dialog"}
+    <input type="hidden" name="gallery_id" id="gallery_delete_id" value="" />
+{/capture}
+
+{include
+    file = "includes/generic-confirm-dialog.html"
+
+    dialog_id       = "gallery_delete_dialog"
+    dialog_title    = {intl l="Delete gallery"}
+    dialog_message  = {intl l="Do you really want to delete this gallery and all its content ?"}
+
+    form_action         = {url path='/admin/module/Gallery/delete'}
+    form_content        = {$smarty.capture.gallery_delete_dialog nofilter}
+}
+{/block}
+
+{block name="javascript-initialization"}
+{javascripts file='assets/js/bootstrap-switch/bootstrap-switch.js'}
+        <script src="{$asset_url}"></script>
+    {/javascripts}
+
+    {javascripts file='assets/js/bootstrap-editable/bootstrap-editable.js'}
+        <script src="{$asset_url}"></script>
+    {/javascripts}
+    {javascripts file='assets/js/jquery.typewatch.js'}
+        <script src="{$asset_url}"></script>
+    {/javascripts}
+    <script>
+        $(function() {
+
+            // Set proper gallery ID in delete from
+            $('a.gallery-delete').click(function(ev) {
+                $('#gallery_delete_id').val($(this).data('id'));
+            });
+
+            // JS stuff for creation form
+            {include
+                file      = "includes/generic-js-dialog.html"
+                dialog_id = "gallery_creation_dialog"
+                form_name = "admin.gallery.creation"
+            }
+
+            {* Toggle object visibility *}
+
+            $(".galleryVisibleToggle").on('switch-change', function(event, data) {
+                $.ajax({
+                   url : "{url path='admin/module/Gallery/toggle-online'}",
+                   data : {
+                       gallery_id : $(this).data('id'),
+                       action : 'visibilityToggle'
+                   }
+                });
+            });
+
+
+            {* Inline editing of object position using bootstrap-editable *}
+
+            $('.galleryPositionChange').editable({
+                type        : 'text',
+                title       : '{intl l="Enter new gallery position"}',
+                mode        : 'popup',
+                inputclass  : 'input-mini',
+                placement   : 'left',
+                success     : function(response, newValue) {
+                    // The URL template
+                    var url = "{url noamp='1' path='/admin/module/Gallery/update-position' gallery_id='__ID__' position='__POS__'}";
+
+                    // Perform subtitutions
+                    url = url.replace('__ID__', $(this).data('id'))
+                    .replace('__POS__', newValue);
+
+                    // Reload the page
+                    location.href = url;
+                }
+            });
+
+        });
+    </script>
+{/block}

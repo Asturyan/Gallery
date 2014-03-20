@@ -1,0 +1,396 @@
+{extends file="admin-layout.tpl"}
+
+{block name="page-title"}{intl l='Edit an image'}{/block}
+
+{block name="check-resource"}admin.gallery.image{/block}
+{block name="check-access"}update{/block}
+
+{block name="main-content"}
+    <div class="documents edit-image">
+
+        <div id="wrapper" class="container">
+
+            {loop type="gallery_image" name="image_edit" visible="*" id="{$imageId}" width="580" backend_context="1" lang="$edit_language_id"}
+                <ul class="breadcrumb">
+        	    <li><a href="{url path='/admin/home'}">{intl l="Home"}</a></li>
+		    <li><a href="{url path='/admin/modules'}">{intl l="Modules"}</a></li>
+		    <li><a href="{url path='/admin/module/gallery'}">{intl l="Gallery"}</a></li>
+                    <li><a href="{url path="{$redirectUrl}"}">{intl l="Image"}</a></li>
+                    <li>{intl l='Editing image "%name"' name=$TITLE}</li>
+                </ul>
+
+		<div class="row">
+		    <div class="col-md-12 general-block-decorator">
+			<div class="row">
+
+			    <div class="col-md-12 title title-without-tabs">
+			       {intl l='Edit image "%name"' name=$TITLE}
+			    </div>
+
+			    <div class="form-container">
+				<div class="col-md-12">
+
+				    {form name="$formId"}
+				    <form method="POST" action="{url path="/admin/module/Gallery/image/{$ID}/update"}" {form_enctype form=$form} class="clearfix">
+					{include
+					    file = "includes/inner-form-toolbar.html"
+					    hide_submit_buttons = false
+	
+					    page_url  = "{url path="/admin/module/Gallery/image/{$ID}/update"}"
+					    close_url = "{url path="{$redirectUrl}"}"
+					}
+	
+					{form_hidden_fields form=$form}
+	
+					{form_field form=$form field='success_url'}
+						<input type="hidden" name="{$name}" value="{url path="/admin/module/Gallery/image/{$ID}/update"}" />
+					{/form_field}
+	
+					{form_field form=$form field='locale'}
+					    <input type="hidden" name="{$name}" value="{$edit_language_locale}" />
+					{/form_field}
+	
+					{if $form_error}<div class="alert alert-danger">{$form_error_message}</div>{/if}
+	
+					<p class="title title-without-tabs">{intl l="Image information"}</p>
+	
+					<div class="row">
+					    <div class="col-md-6">
+						<div class="form-group">
+						    <label class="control-label">{intl l="Preview"} : </label>
+						    <p>
+							<a href="{$ORIGINAL_IMAGE_URL}" alt="{$TITLE}" target="_blank">
+							    <img src="{$IMAGE_URL}" alt="{$TITLE}" class="img-thumbnail">
+							</a>
+						    </p>
+						</div>
+					    </div>
+	
+					    <div class="col-md-6">
+						{form_field form=$form field='file'}
+						    <div class="form-group {if $error}has-error{/if}">
+							<label for="{$label_attr.for}" class="control-label">{$label} : </label>
+							<input type="file" id="{$label_attr.for}" name="{$name}" class="form-control" value="" title="{$label}" placeholder="{intl l='File'}">
+						    </div>
+						{/form_field}
+	
+						{form_field form=$form field='title'}
+						    <div class="form-group {if $error}has-error{/if}">
+							<label for="{$label_attr.for}" class="control-label">{$label} : </label>
+							<input type="text" id="{$label_attr.for}" name="{$name}" class="form-control" value="{$TITLE}" title="{$label}" placeholder="{intl l='Title'}">
+						    </div>
+						{/form_field}
+						
+						{form_field form=$form field='type'}
+						    <div class="form-group {if $error}has-error{/if}">
+
+							<label for="{$label_attr.for}" class="control-label">
+							    {$label} :
+							</label>
+
+							<select id="{$label_attr.for}" name="{$name}" class="form-control" autocomplete="off">
+							    <option value="">{intl l="None"}</option>
+							    <option value="product" {if $TYPE == 'product'}selected="selected"{/if}>{intl l="Product"}</option>
+							    <option value="category" {if $TYPE == 'category'}selected="selected"{/if}>{intl l="Category"}</option>
+							    <option value="folder" {if $TYPE == 'folder'}selected="selected"{/if}>{intl l="Folder"}</option>
+							    <option value="content" {if $TYPE == 'content'}selected="selected"{/if}>{intl l="Content"}</option>
+							    <option value="external" {if $TYPE == 'external'}selected="selected"{/if}>{intl l="External"}</option>
+							</select>
+						    </div>
+						{/form_field}
+						
+						<div id="category_selector" class="ajax-selector hide">
+						    <div class="input-group">
+							<select name="category_id" id="category_id" class="form-control">
+							    <option value="">{intl l='Select a category...'}</option>
+							</select>
+							<span class="input-group-btn" id="category_add_button">
+							   <button class="btn btn-default btn-primary action-btn btn-ajax" type="submit" data-type="category"><span class="glyphicon glyphicon-plus-sign"></span></button>
+							</span>
+						    </div>
+		
+						    <span class="help-block">{intl l='Select a category and click (+) to add it'}</span>
+						</div>
+						
+						<div id="category_selector_empty" class="ajax-selector hide">
+						    <div class="alert alert-info">
+							{intl l="No available category"}
+						    </div>
+						</div>
+						
+						<div id="product_category_selector" class="ajax-selector hide">
+						    <select name="product_category_id" id="product_category_id" class="form-control">
+							<option value="">{intl l='Select a category...'}</option>
+						    </select>
+		
+						    <span class="help-block">{intl l='Select a category'}</span>
+						</div>
+						
+						<div id="product_category_selector_empty" class="ajax-selector hide">
+						    <div class="alert alert-info">
+							{intl l="No available category"}
+						    </div>
+						</div>
+						
+						<div id="product_selector" class="ajax-selector hide">
+						    <div class="input-group">
+							<select name="product_id" id="product_id" class="form-control">
+							    <option value="">{intl l='Select a product...'}</option>
+							</select>
+							<span class="input-group-btn" id="product_add_button">
+							   <button class="btn btn-default btn-primary action-btn btn-ajax" type="submit" data-type="product"><span class="glyphicon glyphicon-plus-sign"></span></button>
+							</span>
+						    </div>
+		
+						    <span class="help-block">{intl l='Select a product and click (+) to add it'}</span>
+						</div>
+						
+						<div id="product_selector_empty" class="ajax-selector hide">
+						    <div class="alert alert-info">
+							{intl l="No available product for this category"}
+						    </div>
+						</div>
+						
+						<div id="folder_selector" class="ajax-selector hide">
+						    <div class="input-group">
+							<select name="folder_id" id="folder_id" class="form-control">
+							    <option value="">{intl l='Select a folder...'}</option>
+							</select>
+							<span class="input-group-btn" id="folder_add_button">
+							   <button class="btn btn-default btn-primary action-btn btn-ajax" type="submit" data-type="folder"><span class="glyphicon glyphicon-plus-sign"></span></button>
+							</span>
+						    </div>
+		
+						    <span class="help-block">{intl l='Select a folder and click (+) to add it'}</span>
+						</div>
+						
+						<div id="folder_selector_empty" class="ajax-selector hide">
+						    <div class="alert alert-info">
+							{intl l="No available folder"}
+						    </div>
+						</div>
+						
+						<div id="content_folder_selector" class="ajax-selector hide">
+						    <select name="content_folder_id" id="content_folder_id" class="form-control">
+							<option value="">{intl l='Select a folder...'}</option>
+						    </select>
+		
+						    <span class="help-block">{intl l='Select a folder'}</span>
+						</div>
+						
+						<div id="product_category_selector_empty" class="ajax-selector hide">
+						    <div class="alert alert-info">
+							{intl l="No available folder"}
+						    </div>
+						</div>
+						
+						<div id="content_selector" class="ajax-selector hide">
+						    <div class="input-group">
+							<select name="content_id" id="content_id" class="form-control">
+							    <option value="">{intl l='Select a product...'}</option>
+							</select>
+							<span class="input-group-btn" id="content_add_button">
+							   <button class="btn btn-default btn-primary action-btn btn-ajax" type="submit" data-type="content"><span class="glyphicon glyphicon-plus-sign"></span></button>
+							</span>
+						    </div>
+		
+						    <span class="help-block">{intl l='Select a content and click (+) to add it'}</span>
+						</div>
+						
+						<div id="content_selector_empty" class="ajax-selector hide">
+						    <div class="alert alert-info">
+							{intl l="No available content for this folder"}
+						    </div>
+						</div>
+						
+						{form_field form=$form field='url'}
+						    <div id="external_selector" class="ajax-selector hide">
+							<div class="form-group {if $error}has-error{/if}">
+							    <label for="{$label_attr.for}" class="control-label">{$label} : </label>
+							    <input type="text" id="{$label_attr.for}" name="{$name}" class="form-control" value="{$URL}" title="{$label}" placeholder="{intl l='Url'}">
+							</div>
+						    </div>
+						{/form_field}
+						
+						{form_field form=$form field='visible'}
+						    <div class="form-group {if $error}has-error{/if}">
+							<label for="{$label_attr.for}" class="control-label">{intl l='Visibility'}</label>
+							<div class="checkbox">
+							    <label>
+								<input type="checkbox" id="{$label_attr.for}" name="{$name}" value="1" {if $VISIBLE != 0}checked="checked"{/if}>
+								{$label}
+							    </label>
+							</div>
+						    </div>
+						{/form_field}
+					    </div>
+					</div>
+					<div class="row">
+					    <div class="col-md-12">
+						{form_field form=$form field='description'}
+						    <div class="form-group {if $error}has-error{/if}">
+							<label for="{$label_attr.for}" class="control-label">{$label} : </label>
+							<textarea id="{$label_attr.for}" name="{$name}" class="form-control wysiwyg" title="{$label}" placeholder="{intl l='Description'}">{$DESCRIPTION}</textarea>
+						    </div>
+						{/form_field}
+					    </div>
+					</div>
+	
+					{include
+					    file = "includes/inner-form-toolbar.html"
+					    hide_submit_buttons = false
+					    hide_flags = true
+	
+					    page_url  = "{url path="/admin/module/Gallery/image/{$ID}/update"}"
+					    close_url = "{url path="{$redirectUrl}"}"
+					}
+
+				    </form>
+				    {/form}
+				</div>
+			    </div>
+			</div>
+		    </div>
+		</div>
+		<script>
+		    var current_type = '{$TYPE}';
+		    var current_type_id = '{$TYPE_ID}';
+		    var current_subtype_id = '{$SUBTYPE_ID}';
+		</script>
+    	    {/loop}
+
+            {elseloop rel="image_edit"}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row inner-toolbar clearfix">
+                            <div class="col-md-6 inner-actions pull-right">
+                                <a href="{url path="{$redirectUrl}"}" class="btn btn-default btn-info">{intl l='Back'} <span class="glyphicon glyphicon-remove"></span></a>
+                            </div>
+                        </div>
+                        <div class="alert alert-error">
+                            {intl l="Sorry, image ID=%id was not found." id=$imageId}
+                        </div>
+                    </div>
+                </div>
+            {/elseloop}
+
+        </div>
+    </div>
+{/block}
+
+{block name="javascript-initialization"}
+    {javascripts file='assets/js/main.js'}
+        <script src="{$asset_url}"></script>
+    {/javascripts}
+<script>
+$(function() {
+    // Load type selection
+    $('#type').change(function(e) {
+	var val = $(this).val();
+	var type = val;
+	var default_val = val;
+	var parentId = 0;
+	if (val == 'product') {
+	    val = 'category';
+	    type += '_category';
+	}
+	if (val == 'content') {
+	    val = 'folder';
+	    type += '_folder';
+	}
+	
+	$('#type_id').val('');
+	$('#subtype_id').val('');
+	
+	$('.ajax-selector').addClass('hide');
+	
+	if (val != "" && val != 'external') {
+		$.ajax({
+		     url      : '{url path="/admin/module/Gallery/image/available-types/"}' + val + '.xml',
+		     type     : 'get',
+		     dataType : 'json',
+		     success  : function(json) {
+			 $('#' + type + '_id :not(:first-child)').remove();
+	
+			 var have_content = false;
+			 var has_selected = false;
+	
+			 $.each(json, function(idx, value) {
+			    var selected = (current_subtype_id == value.id && default_val == current_type)?'selected':false;
+			    if (selected) has_selected = true;
+			     $('#' + type + '_id').append($('<option>').text(value.title).attr('value', value.id).attr('selected', selected));
+	
+			     have_content = true;
+			 });
+	
+			 if (have_content) {
+			     $('#' + val + '_selector_empty').addClass('hide');
+			     $('#' + type + '_selector').removeClass('hide');
+			 }
+			 else {
+			     $('#' + val + '_selector_empty').removeClass('hide');
+			     $('#' + type + '_selector').addClass('hide');
+			 }
+			
+			if (has_selected) {
+			    $('#' + type + '_id').change();
+			}
+	
+		     }
+		});
+	} else if (val == 'external') {
+	    $('#' + type + '_selector').removeClass('hide');
+	}
+    });
+    
+    $('#product_category_id, #content_folder_id').change(function(e) {
+	var type = $('#type').val();
+	var val = $(this).val();
+	$('#subtype_id').val(val);
+	
+	if (type == 'product') var parent = 'category';
+	else if (type == 'content') var parent = 'folder';
+	
+	$.ajax({
+	    url      : '{url path="/admin/module/Gallery/image/available-subtypes/"}' + parent + '/' + val + '/' + type + '.xml',
+	    type     : 'get',
+	    dataType : 'json',
+	    success  : function(json) {
+		$('#' + type + '_id :not(:first-child)').remove();
+
+		var have_content = false;
+		var has_selected = false;
+
+		$.each(json, function(idx, value) {
+		    var selected = current_type_id == value.id && type == current_type?'selected':false;
+		    if (selected) has_selected = true;
+		    $('#' + type + '_id').append($('<option>').text(value.title).attr('value', value.id).attr('selected', selected));
+
+		    have_content = true;
+		});
+
+		if (have_content) {
+		    $('#' + type + '_selector_empty').addClass('hide');
+		    $('#' + type + '_selector').removeClass('hide');
+		}
+		else {
+		    $('#' + type + '_selector_empty').removeClass('hide');
+		    $('#' + type + '_selector').addClass('hide');
+		}
+		
+		if (has_selected) $('#type_id').val(current_type_id);
+	    }
+       });
+    });
+    
+    $('.btn-ajax').click(function (e) {
+	e.preventDefault();
+	var type = $(this).data('type');
+	$('#type_id').val($('#' + type + '_id').val());
+    });
+    if (current_type) $('#type').change();
+    if (current_type_id) $('#subtype_id').val(current_type_id);
+
+});
+</script>
+{/block}
