@@ -249,7 +249,7 @@ class GalleryImage extends BaseI18nLoop implements PropelSearchLoopInterface
                     ;
 
                     $next = GalleryImageQuery::create()
-                        ->filterByPosition($result->getPosition(), Criteria::LESS_THAN)
+                        ->filterByPosition($result->getPosition(), Criteria::GREATER_THAN)
                         ->filterByGalleryId($result->getGalleryId())
                         ->orderByPosition(Criteria::ASC)
                         ->findOne()
