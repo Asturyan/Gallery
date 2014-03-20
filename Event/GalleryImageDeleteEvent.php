@@ -23,12 +23,6 @@
 
 namespace Gallery\Event;
 
-use Thelia\Core\Event\ActionEvent;
-use Thelia\Model\CategoryImage;
-use Thelia\Model\ContentImage;
-use Thelia\Model\FolderImage;
-use Thelia\Model\ProductImage;
-
 /**
  *
  * Occurring when a Image is about to be deleted

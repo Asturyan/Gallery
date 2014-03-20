@@ -35,20 +35,15 @@ use Thelia\Model\ConfigQuery;
 use Gallery\Tools\GalleryFileManager;
 use Thelia\Tools\URL;
 
-use Imagine\Image\ImagineInterface;
-use Imagine\Image\ImageInterface;
-use Imagine\Image\Box;
 use Imagine\Image\Color;
-use Imagine\Image\Point;
 use Thelia\Exception\ImageException;
-use Thelia\Core\Event\TheliaEvents;
 
 /**
  *
  * Gallery Image management actions. This class handles image processing and caching.
  *
  * Extend Image Class
- * 
+ *
  * @package Gallery\Action
  * @author Marc LEMARCHAND <mlemarchand@hubchannel.fr>
  *
@@ -283,7 +278,7 @@ class GalleryImage extends Image implements EventSubscriberInterface
 
         $fileManager->deleteFile($event->getImageToDelete());
     }
-    
+
     public static function getSubscribedEvents()
     {
         return array(

@@ -41,7 +41,7 @@ class GalleryImageCreateOrUpdateEvent extends GalleryImageEvent
     protected $subtype_id;
     protected $url;
     protected $visible;
-    
+
     /**
      * Set old model value
      *
@@ -61,7 +61,7 @@ class GalleryImageCreateOrUpdateEvent extends GalleryImageEvent
     {
         return $this->oldModelImage;
     }
-    
+
     /**
      * @param mixed $type
      */
@@ -79,7 +79,7 @@ class GalleryImageCreateOrUpdateEvent extends GalleryImageEvent
     {
         return $this->type;
     }
-    
+
     /**
      * @param mixed $type_id
      */
@@ -97,7 +97,7 @@ class GalleryImageCreateOrUpdateEvent extends GalleryImageEvent
     {
         return $this->type_id;
     }
-    
+
      /**
      * @param mixed $type_id
      */
@@ -115,7 +115,7 @@ class GalleryImageCreateOrUpdateEvent extends GalleryImageEvent
     {
         return $this->subtype_id;
     }
-    
+
     /**
      * @param mixed $url
      */
@@ -133,7 +133,7 @@ class GalleryImageCreateOrUpdateEvent extends GalleryImageEvent
     {
         return $this->url;
     }
-    
+
     /**
      * @param mixed $visible
      *

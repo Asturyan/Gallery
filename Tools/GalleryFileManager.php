@@ -42,9 +42,9 @@ class GalleryFileManager extends FileManager
     /**
      * Copy UploadedFile into the server storage directory
      *
-     * @param int                                                                                                                 $parentId     Parent id
-     * @param GalleryImage                                                                                                        $model        Model saved
-     * @param UploadedFile                                                                                                        $uploadedFile Ready to be uploaded file
+     * @param int          $parentId     Parent id
+     * @param GalleryImage $model        Model saved
+     * @param UploadedFile $uploadedFile Ready to be uploaded file
      *
      * @throws \Thelia\Exception\ImageException
      * @return UploadedFile
@@ -75,8 +75,8 @@ class GalleryFileManager extends FileManager
     /**
      * Save image into the database
      *
-     * @param GalleryImageCreateOrUpdateEvent                     $event      Image event
-     * @param GalleryImage                                        $modelImage Image to save
+     * @param GalleryImageCreateOrUpdateEvent $event      Image event
+     * @param GalleryImage                    $modelImage Image to save
      *
      * @return int                              Nb lines modified
      * @throws \Thelia\Exception\ImageException
@@ -139,7 +139,7 @@ class GalleryFileManager extends FileManager
      */
     public function getUploadDir()
     {
-        
+
         $uri = THELIA_LOCAL_DIR . 'media/images/gallery';
 
         return $uri;
@@ -149,7 +149,7 @@ class GalleryFileManager extends FileManager
     /**
      * Deduce image redirecting URL from parent type
      *
-     * @param int    $parentId   Parent id
+     * @param int $parentId Parent id
      *
      * @return string
      */

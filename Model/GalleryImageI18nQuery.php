@@ -4,7 +4,6 @@ namespace Gallery\Model;
 
 use Gallery\Model\Base\GalleryImageI18nQuery as BaseGalleryImageI18nQuery;
 
-
 /**
  * Skeleton subclass for performing query and update operations on the 'gallery_image_i18n' table.
  *

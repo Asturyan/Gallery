@@ -24,7 +24,7 @@
     <route id="admin.gallery.update-position" path="/admin/module/Gallery/update-position">
         <default key="_controller">Gallery\Controller\Admin\GalleryController::updatePositionAction</default>
     </route>
-    
+
     <route id="admin.gallery.image.save-ajax" path="/admin/module/Gallery/image/{parentId}/save-ajax">
         <default key="_controller">Gallery\Controller\Admin\ImageController::saveImageAjaxAction</default>
         <requirement key="parentId">\d+</requirement>

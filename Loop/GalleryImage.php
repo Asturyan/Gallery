@@ -94,7 +94,7 @@ class GalleryImage extends BaseI18nLoop implements PropelSearchLoopInterface
             Argument::createIntTypeArgument('gallery_id'),
             Argument::createBooleanTypeArgument('force_return', true)
         );
-        
+
         return $collection;
     }
 
@@ -116,7 +116,7 @@ class GalleryImage extends BaseI18nLoop implements PropelSearchLoopInterface
         if (!is_null($gallery_id)) {
             $search->filterByGalleryId($gallery_id, Criteria::IN);
         }
-        
+
         $visible = $this->getVisible();
 
         if ($visible !== BooleanOrBothType::ANY) $search->filterByVisible($visible ? 1 : 0);
@@ -192,7 +192,7 @@ class GalleryImage extends BaseI18nLoop implements PropelSearchLoopInterface
                 $resize_mode = \Thelia\Action\Image::KEEP_IMAGE_RATIO;
 
         }
-        
+
         foreach ($loopResult->getResultDataCollection() as $result) {
 
             // Setup required transformations
@@ -203,7 +203,7 @@ class GalleryImage extends BaseI18nLoop implements PropelSearchLoopInterface
             if (! is_null($background_color)) $event->setBackgroundColor($background_color);
             if (! is_null($quality)) $event->setQuality($quality);
             if (! is_null($effects)) $event->setEffects($effects);
-            
+
             // Put source image file path
             $source_filepath = sprintf("%s%s/%s/%s",
                 THELIA_ROOT,
@@ -211,16 +211,16 @@ class GalleryImage extends BaseI18nLoop implements PropelSearchLoopInterface
                 'gallery',
                 $result->getFile()
             );
-            
+
             $event->setSourceFilepath($source_filepath);
              $event->setCacheSubdirectory('gallery');
-            
+
             try {
                 // Dispatch image processing event
                 $this->dispatcher->dispatch(GalleryImageEvent::IMAGE_PROCESS, $event);
 
                 $loopResultRow = new LoopResultRow($result);
-                
+
                 $loopResultRow
                     ->set("ID"                  , $result->getId())
                     ->set("LOCALE"              , $this->locale)
@@ -240,7 +240,7 @@ class GalleryImage extends BaseI18nLoop implements PropelSearchLoopInterface
                 $loopResult->addRow($loopResultRow);
             } catch (\Exception $ex) {
                 // Ignore the result and log an error
-		Tlog::getInstance()->addError("Failed to process image in image loop: ", $ex->getMessage(), " - Arguments:", $this->args);
+        Tlog::getInstance()->addError("Failed to process image in image loop: ", $ex->getMessage(), " - Arguments:", $this->args);
             }
 
         }

@@ -9,7 +9,7 @@ class GalleryImage extends BaseGalleryImage
 {
     use \Thelia\Model\Tools\ModelEventDispatcherTrait;
     use \Thelia\Model\Tools\PositionManagementTrait;
-    
+
     /**
      * Calculate next position relative to our parent
      */
@@ -27,7 +27,7 @@ class GalleryImage extends BaseGalleryImage
 
         return true;
     }
-    
+
     public function preDelete(ConnectionInterface $con = null)
     {
         $this->reorderBeforeDelete(

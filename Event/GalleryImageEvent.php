@@ -54,7 +54,7 @@ class GalleryImageEvent extends ImageEvent
      * Delete given image
      */
     const IMAGE_DELETE = "gallery.action.image.deleteImage";
-    
+
     protected $modelImage = null;
 
     /** @var UploadedFile Image file to save */
@@ -71,7 +71,7 @@ class GalleryImageEvent extends ImageEvent
     /**
      * Constructor
      *
-     * @param int    $parentId  Image parent id
+     * @param int $parentId Image parent id
      */
     public function __construct($parentId)
     {

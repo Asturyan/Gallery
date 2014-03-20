@@ -3,7 +3,7 @@
 <config xmlns="http://thelia.net/schema/dic/config"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://thelia.net/schema/dic/config http://thelia.net/schema/dic/config/thelia-1.0.xsd">
-        
+
     <parameters>
         <parameter key="gallery_types" type="collection">
             <parameter key="product">Product</parameter>
@@ -12,7 +12,7 @@
             <parameter key="content">Content</parameter>
         </parameter>
     </parameters>
-        
+
     <loops>
         <loop class="Gallery\Loop\Gallery" name="gallery" />
         <loop class="Gallery\Loop\GalleryImage" name="gallery_image" />
@@ -42,5 +42,5 @@
             <tag name="form.type" alias="gallery_type" />
         </service>
     </services>
-    
+
 </config>

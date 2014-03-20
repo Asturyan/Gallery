@@ -8,8 +8,8 @@ use Propel\Runtime\Connection\ConnectionInterface;
 class Gallery extends BaseGallery
 {
     use \Thelia\Model\Tools\ModelEventDispatcherTrait;
-    use \Thelia\Model\Tools\PositionManagementTrait;  
-    
+    use \Thelia\Model\Tools\PositionManagementTrait;
+
     /**
      *
      * count all images for current gallery
@@ -31,7 +31,7 @@ class Gallery extends BaseGallery
 
         return $countImage;
     }
-    
+
     public function deleteImages(ConnectionInterface $con = null)
     {
         $images = GalleryImageQuery::create()
@@ -44,14 +44,14 @@ class Gallery extends BaseGallery
             }
         }
     }
-    
+
     public function preInsert(ConnectionInterface $con = null)
     {
         $this->setPosition($this->getNextPosition());
 
         return true;
     }
-    
+
     public function preDelete(ConnectionInterface $con = null)
     {
         $this->reorderBeforeDelete(

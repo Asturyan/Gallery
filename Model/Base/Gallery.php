@@ -32,7 +32,6 @@ abstract class Gallery implements ActiveRecordInterface
      */
     const TABLE_MAP = '\\Gallery\\Model\\Map\\GalleryTableMap';
 
-
     /**
      * attribute to determine if this object has previously been saved.
      * @var boolean
@@ -344,9 +343,9 @@ abstract class Gallery implements ActiveRecordInterface
      * $book->importFrom('JSON', '{"Id":9012,"Title":"Don Juan","ISBN":"0140422161","Price":12.99,"PublisherId":1234,"AuthorId":5678}');
      * </code>
      *
-     * @param mixed $parser A AbstractParser instance,
+     * @param mixed  $parser A AbstractParser instance,
      *                       or a format name ('XML', 'YAML', 'JSON', 'CSV')
-     * @param string $data The source data to import from
+     * @param string $data   The source data to import from
      *
      * @return Gallery The current object, for fluid interface
      */
@@ -396,33 +395,30 @@ abstract class Gallery implements ActiveRecordInterface
     /**
      * Get the [id] column value.
      *
-     * @return   int
+     * @return int
      */
     public function getId()
     {
-
         return $this->id;
     }
 
     /**
      * Get the [visible] column value.
      *
-     * @return   int
+     * @return int
      */
     public function getVisible()
     {
-
         return $this->visible;
     }
 
     /**
      * Get the [position] column value.
      *
-     * @return   int
+     * @return int
      */
     public function getPosition()
     {
-
         return $this->position;
     }
 
@@ -430,8 +426,8 @@ abstract class Gallery implements ActiveRecordInterface
      * Get the [optionally formatted] temporal [created_at] column value.
      *
      *
-     * @param      string $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw \DateTime object will be returned.
+     * @param string $format The date/time format string (either date()-style or strftime()-style).
+     *                       If format is NULL, then the raw \DateTime object will be returned.
      *
      * @return mixed Formatted date/time value as string or \DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
      *
@@ -450,8 +446,8 @@ abstract class Gallery implements ActiveRecordInterface
      * Get the [optionally formatted] temporal [updated_at] column value.
      *
      *
-     * @param      string $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw \DateTime object will be returned.
+     * @param string $format The date/time format string (either date()-style or strftime()-style).
+     *                       If format is NULL, then the raw \DateTime object will be returned.
      *
      * @return mixed Formatted date/time value as string or \DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
      *
@@ -469,8 +465,8 @@ abstract class Gallery implements ActiveRecordInterface
     /**
      * Set the value of [id] column.
      *
-     * @param      int $v new value
-     * @return   \Gallery\Model\Gallery The current object (for fluent API support)
+     * @param  int                    $v new value
+     * @return \Gallery\Model\Gallery The current object (for fluent API support)
      */
     public function setId($v)
     {
@@ -483,15 +479,14 @@ abstract class Gallery implements ActiveRecordInterface
             $this->modifiedColumns[GalleryTableMap::ID] = true;
         }
 
-
         return $this;
     } // setId()
 
     /**
      * Set the value of [visible] column.
      *
-     * @param      int $v new value
-     * @return   \Gallery\Model\Gallery The current object (for fluent API support)
+     * @param  int                    $v new value
+     * @return \Gallery\Model\Gallery The current object (for fluent API support)
      */
     public function setVisible($v)
     {
@@ -504,15 +499,14 @@ abstract class Gallery implements ActiveRecordInterface
             $this->modifiedColumns[GalleryTableMap::VISIBLE] = true;
         }
 
-
         return $this;
     } // setVisible()
 
     /**
      * Set the value of [position] column.
      *
-     * @param      int $v new value
-     * @return   \Gallery\Model\Gallery The current object (for fluent API support)
+     * @param  int                    $v new value
+     * @return \Gallery\Model\Gallery The current object (for fluent API support)
      */
     public function setPosition($v)
     {
@@ -525,16 +519,15 @@ abstract class Gallery implements ActiveRecordInterface
             $this->modifiedColumns[GalleryTableMap::POSITION] = true;
         }
 
-
         return $this;
     } // setPosition()
 
     /**
      * Sets the value of [created_at] column to a normalized version of the date/time value specified.
      *
-     * @param      mixed $v string, integer (timestamp), or \DateTime value.
-     *               Empty strings are treated as NULL.
-     * @return   \Gallery\Model\Gallery The current object (for fluent API support)
+     * @param  mixed                  $v string, integer (timestamp), or \DateTime value.
+     *                                   Empty strings are treated as NULL.
+     * @return \Gallery\Model\Gallery The current object (for fluent API support)
      */
     public function setCreatedAt($v)
     {
@@ -546,16 +539,15 @@ abstract class Gallery implements ActiveRecordInterface
             }
         } // if either are not null
 
-
         return $this;
     } // setCreatedAt()
 
     /**
      * Sets the value of [updated_at] column to a normalized version of the date/time value specified.
      *
-     * @param      mixed $v string, integer (timestamp), or \DateTime value.
-     *               Empty strings are treated as NULL.
-     * @return   \Gallery\Model\Gallery The current object (for fluent API support)
+     * @param  mixed                  $v string, integer (timestamp), or \DateTime value.
+     *                                   Empty strings are treated as NULL.
+     * @return \Gallery\Model\Gallery The current object (for fluent API support)
      */
     public function setUpdatedAt($v)
     {
@@ -566,7 +558,6 @@ abstract class Gallery implements ActiveRecordInterface
                 $this->modifiedColumns[GalleryTableMap::UPDATED_AT] = true;
             }
         } // if either are not null
-
 
         return $this;
     } // setUpdatedAt()
@@ -665,10 +656,10 @@ abstract class Gallery implements ActiveRecordInterface
      *
      * This will only work if the object has been saved and has a valid primary key set.
      *
-     * @param      boolean $deep (optional) Whether to also de-associated any related objects.
-     * @param      ConnectionInterface $con (optional) The ConnectionInterface connection to use.
+     * @param  boolean             $deep (optional) Whether to also de-associated any related objects.
+     * @param  ConnectionInterface $con  (optional) The ConnectionInterface connection to use.
      * @return void
-     * @throws PropelException - if this object is deleted, unsaved or doesn't have pk match in db
+     * @throws PropelException     - if this object is deleted, unsaved or doesn't have pk match in db
      */
     public function reload($deep = false, ConnectionInterface $con = null)
     {
@@ -707,7 +698,7 @@ abstract class Gallery implements ActiveRecordInterface
     /**
      * Removes this object from datastore and sets delete attribute.
      *
-     * @param      ConnectionInterface $con
+     * @param  ConnectionInterface $con
      * @return void
      * @throws PropelException
      * @see Gallery::setDeleted()
@@ -750,8 +741,8 @@ abstract class Gallery implements ActiveRecordInterface
      * method.  This method wraps all precipitate database operations in a
      * single transaction.
      *
-     * @param      ConnectionInterface $con
-     * @return int             The number of rows affected by this insert/update and any referring fk objects' save() operations.
+     * @param  ConnectionInterface $con
+     * @return int                 The number of rows affected by this insert/update and any referring fk objects' save() operations.
      * @throws PropelException
      * @see doSave()
      */
@@ -812,8 +803,8 @@ abstract class Gallery implements ActiveRecordInterface
      * If the object is new, it inserts it; otherwise an update is performed.
      * All related objects are also updated in this method.
      *
-     * @param      ConnectionInterface $con
-     * @return int             The number of rows affected by this insert/update and any referring fk objects' save() operations.
+     * @param  ConnectionInterface $con
+     * @return int                 The number of rows affected by this insert/update and any referring fk objects' save() operations.
      * @throws PropelException
      * @see save()
      */
@@ -878,7 +869,7 @@ abstract class Gallery implements ActiveRecordInterface
     /**
      * Insert the row in the database.
      *
-     * @param      ConnectionInterface $con
+     * @param ConnectionInterface $con
      *
      * @throws PropelException
      * @see doSave()
@@ -956,7 +947,7 @@ abstract class Gallery implements ActiveRecordInterface
     /**
      * Update the row in the database.
      *
-     * @param      ConnectionInterface $con
+     * @param ConnectionInterface $con
      *
      * @return Integer Number of updated rows
      * @see doSave()
@@ -972,12 +963,12 @@ abstract class Gallery implements ActiveRecordInterface
     /**
      * Retrieves a field from the object by name passed in as a string.
      *
-     * @param      string $name name
-     * @param      string $type The type of fieldname the $name is of:
-     *                     one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_STUDLYPHPNAME
-     *                     TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
-     *                     Defaults to TableMap::TYPE_PHPNAME.
-     * @return mixed Value of field.
+     * @param  string $name name
+     * @param  string $type The type of fieldname the $name is of:
+     *                      one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_STUDLYPHPNAME
+     *                      TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
+     *                      Defaults to TableMap::TYPE_PHPNAME.
+     * @return mixed  Value of field.
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
@@ -991,7 +982,7 @@ abstract class Gallery implements ActiveRecordInterface
      * Retrieves a field from the object by Position as specified in the xml schema.
      * Zero-based.
      *
-     * @param      int $pos position in xml schema
+     * @param  int   $pos position in xml schema
      * @return mixed Value of field at $pos
      */
     public function getByPosition($pos)
@@ -1024,12 +1015,12 @@ abstract class Gallery implements ActiveRecordInterface
      * You can specify the key type of the array by passing one of the class
      * type constants.
      *
-     * @param     string  $keyType (optional) One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_STUDLYPHPNAME,
-     *                    TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
-     *                    Defaults to TableMap::TYPE_PHPNAME.
-     * @param     boolean $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
-     * @param     array $alreadyDumpedObjects List of objects to skip to avoid recursion
-     * @param     boolean $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
+     * @param string  $keyType                (optional) One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_STUDLYPHPNAME,
+     *                                        TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
+     *                                        Defaults to TableMap::TYPE_PHPNAME.
+     * @param boolean $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
+     * @param array   $alreadyDumpedObjects   List of objects to skip to avoid recursion
+     * @param boolean $includeForeignObjects  (optional) Whether to include hydrated related objects. Default to FALSE.
      *
      * @return array an associative array containing the field names (as keys) and field values
      */
@@ -1067,12 +1058,12 @@ abstract class Gallery implements ActiveRecordInterface
     /**
      * Sets a field from the object by name passed in as a string.
      *
-     * @param      string $name
-     * @param      mixed  $value field value
-     * @param      string $type The type of fieldname the $name is of:
-     *                     one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_STUDLYPHPNAME
-     *                     TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
-     *                     Defaults to TableMap::TYPE_PHPNAME.
+     * @param  string $name
+     * @param  mixed  $value field value
+     * @param  string $type  The type of fieldname the $name is of:
+     *                       one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_STUDLYPHPNAME
+     *                       TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
+     *                       Defaults to TableMap::TYPE_PHPNAME.
      * @return void
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
@@ -1086,8 +1077,8 @@ abstract class Gallery implements ActiveRecordInterface
      * Sets a field from the object by Position as specified in the xml schema.
      * Zero-based.
      *
-     * @param      int $pos position in xml schema
-     * @param      mixed $value field value
+     * @param  int   $pos   position in xml schema
+     * @param  mixed $value field value
      * @return void
      */
     public function setByPosition($pos, $value)
@@ -1124,8 +1115,8 @@ abstract class Gallery implements ActiveRecordInterface
      * TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      * The default key type is the column's TableMap::TYPE_PHPNAME.
      *
-     * @param      array  $arr     An array to populate the object from.
-     * @param      string $keyType The type of keys the array uses.
+     * @param  array  $arr     An array to populate the object from.
+     * @param  string $keyType The type of keys the array uses.
      * @return void
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
@@ -1153,7 +1144,6 @@ abstract class Gallery implements ActiveRecordInterface
         if ($this->isColumnModified(GalleryTableMap::POSITION)) $criteria->add(GalleryTableMap::POSITION, $this->position);
         if ($this->isColumnModified(GalleryTableMap::CREATED_AT)) $criteria->add(GalleryTableMap::CREATED_AT, $this->created_at);
         if ($this->isColumnModified(GalleryTableMap::UPDATED_AT)) $criteria->add(GalleryTableMap::UPDATED_AT, $this->updated_at);
-
         return $criteria;
     }
 
@@ -1175,7 +1165,7 @@ abstract class Gallery implements ActiveRecordInterface
 
     /**
      * Returns the primary key for this object (row).
-     * @return   int
+     * @return int
      */
     public function getPrimaryKey()
     {
@@ -1185,7 +1175,7 @@ abstract class Gallery implements ActiveRecordInterface
     /**
      * Generic method to set the primary key (id column).
      *
-     * @param       int $key Primary key.
+     * @param  int  $key Primary key.
      * @return void
      */
     public function setPrimaryKey($key)
@@ -1199,7 +1189,6 @@ abstract class Gallery implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-
         return null === $this->getId();
     }
 
@@ -1209,9 +1198,9 @@ abstract class Gallery implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Gallery\Model\Gallery (or compatible) type.
-     * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
+     * @param  object          $copyObj  An object of \Gallery\Model\Gallery (or compatible) type.
+     * @param  boolean         $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
+     * @param  boolean         $makeNew  Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
@@ -1254,8 +1243,8 @@ abstract class Gallery implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return                 \Gallery\Model\Gallery Clone of current object.
+     * @param  boolean                $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
+     * @return \Gallery\Model\Gallery Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1274,7 +1263,7 @@ abstract class Gallery implements ActiveRecordInterface
      * Avoids crafting an 'init[$relationName]s' method name
      * that wouldn't work when StandardEnglishPluralizer is used.
      *
-     * @param      string $relationName The name of the relation to initialize
+     * @param  string $relationName The name of the relation to initialize
      * @return void
      */
     public function initRelation($relationName)
@@ -1316,8 +1305,8 @@ abstract class Gallery implements ActiveRecordInterface
      * however, you may wish to override this method in your stub class to provide setting appropriate
      * to your application -- for example, setting the initial array to the values stored in database.
      *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
+     * @param boolean $overrideExisting If set to true, the method call initializes
+     *                                  the collection even if it is not empty
      *
      * @return void
      */
@@ -1339,8 +1328,8 @@ abstract class Gallery implements ActiveRecordInterface
      * If this ChildGallery is new, it will return
      * an empty collection or the current collection; the criteria is ignored on a new object.
      *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
+     * @param  Criteria                       $criteria optional Criteria object to narrow the query
+     * @param  ConnectionInterface            $con      optional connection object
      * @return Collection|ChildGalleryImage[] List of ChildGalleryImage objects
      * @throws PropelException
      */
@@ -1396,14 +1385,13 @@ abstract class Gallery implements ActiveRecordInterface
      * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
      * and new objects from the given Propel collection.
      *
-     * @param      Collection $galleryImages A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return   ChildGallery The current object (for fluent API support)
+     * @param  Collection          $galleryImages A Propel collection.
+     * @param  ConnectionInterface $con           Optional connection object
+     * @return ChildGallery        The current object (for fluent API support)
      */
     public function setGalleryImages(Collection $galleryImages, ConnectionInterface $con = null)
     {
         $galleryImagesToDelete = $this->getGalleryImages(new Criteria(), $con)->diff($galleryImages);
-
 
         $this->galleryImagesScheduledForDeletion = $galleryImagesToDelete;
 
@@ -1425,10 +1413,10 @@ abstract class Gallery implements ActiveRecordInterface
     /**
      * Returns the number of related GalleryImage objects.
      *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related GalleryImage objects.
+     * @param  Criteria            $criteria
+     * @param  boolean             $distinct
+     * @param  ConnectionInterface $con
+     * @return int                 Count of related GalleryImage objects.
      * @throws PropelException
      */
     public function countGalleryImages(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
@@ -1460,8 +1448,8 @@ abstract class Gallery implements ActiveRecordInterface
      * Method called to associate a ChildGalleryImage object to this object
      * through the ChildGalleryImage foreign key attribute.
      *
-     * @param    ChildGalleryImage $l ChildGalleryImage
-     * @return   \Gallery\Model\Gallery The current object (for fluent API support)
+     * @param  ChildGalleryImage      $l ChildGalleryImage
+     * @return \Gallery\Model\Gallery The current object (for fluent API support)
      */
     public function addGalleryImage(ChildGalleryImage $l)
     {
@@ -1534,8 +1522,8 @@ abstract class Gallery implements ActiveRecordInterface
      * however, you may wish to override this method in your stub class to provide setting appropriate
      * to your application -- for example, setting the initial array to the values stored in database.
      *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
+     * @param boolean $overrideExisting If set to true, the method call initializes
+     *                                  the collection even if it is not empty
      *
      * @return void
      */
@@ -1557,8 +1545,8 @@ abstract class Gallery implements ActiveRecordInterface
      * If this ChildGallery is new, it will return
      * an empty collection or the current collection; the criteria is ignored on a new object.
      *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
+     * @param  Criteria                      $criteria optional Criteria object to narrow the query
+     * @param  ConnectionInterface           $con      optional connection object
      * @return Collection|ChildGalleryI18n[] List of ChildGalleryI18n objects
      * @throws PropelException
      */
@@ -1614,14 +1602,13 @@ abstract class Gallery implements ActiveRecordInterface
      * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
      * and new objects from the given Propel collection.
      *
-     * @param      Collection $galleryI18ns A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return   ChildGallery The current object (for fluent API support)
+     * @param  Collection          $galleryI18ns A Propel collection.
+     * @param  ConnectionInterface $con          Optional connection object
+     * @return ChildGallery        The current object (for fluent API support)
      */
     public function setGalleryI18ns(Collection $galleryI18ns, ConnectionInterface $con = null)
     {
         $galleryI18nsToDelete = $this->getGalleryI18ns(new Criteria(), $con)->diff($galleryI18ns);
-
 
         //since at least one column in the foreign key is at the same time a PK
         //we can not just set a PK to NULL in the lines below. We have to store
@@ -1646,10 +1633,10 @@ abstract class Gallery implements ActiveRecordInterface
     /**
      * Returns the number of related GalleryI18n objects.
      *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related GalleryI18n objects.
+     * @param  Criteria            $criteria
+     * @param  boolean             $distinct
+     * @param  ConnectionInterface $con
+     * @return int                 Count of related GalleryI18n objects.
      * @throws PropelException
      */
     public function countGalleryI18ns(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
@@ -1681,8 +1668,8 @@ abstract class Gallery implements ActiveRecordInterface
      * Method called to associate a ChildGalleryI18n object to this object
      * through the ChildGalleryI18n foreign key attribute.
      *
-     * @param    ChildGalleryI18n $l ChildGalleryI18n
-     * @return   \Gallery\Model\Gallery The current object (for fluent API support)
+     * @param  ChildGalleryI18n       $l ChildGalleryI18n
+     * @return \Gallery\Model\Gallery The current object (for fluent API support)
      */
     public function addGalleryI18n(ChildGalleryI18n $l)
     {
@@ -1712,7 +1699,7 @@ abstract class Gallery implements ActiveRecordInterface
     }
 
     /**
-     * @param  GalleryI18n $galleryI18n The galleryI18n object to remove.
+     * @param  GalleryI18n  $galleryI18n The galleryI18n object to remove.
      * @return ChildGallery The current object (for fluent API support)
      */
     public function removeGalleryI18n($galleryI18n)
@@ -1754,7 +1741,7 @@ abstract class Gallery implements ActiveRecordInterface
      * objects with circular references (even in PHP 5.3). This is currently necessary
      * when using Propel in certain daemon or large-volume/high-memory operations.
      *
-     * @param      boolean $deep Whether to also clear the references on all referrer objects.
+     * @param boolean $deep Whether to also clear the references on all referrer objects.
      */
     public function clearAllReferences($deep = false)
     {
@@ -1794,7 +1781,7 @@ abstract class Gallery implements ActiveRecordInterface
     /**
      * Mark the current object so that the update date doesn't get updated during next save
      *
-     * @return     ChildGallery The current object (for fluent API support)
+     * @return ChildGallery The current object (for fluent API support)
      */
     public function keepUpdateDateUnchanged()
     {
@@ -1808,9 +1795,9 @@ abstract class Gallery implements ActiveRecordInterface
     /**
      * Sets the locale for translations
      *
-     * @param     string $locale Locale to use for the translation, e.g. 'fr_FR'
+     * @param string $locale Locale to use for the translation, e.g. 'fr_FR'
      *
-     * @return    ChildGallery The current object (for fluent API support)
+     * @return ChildGallery The current object (for fluent API support)
      */
     public function setLocale($locale = 'en_US')
     {
@@ -1822,7 +1809,7 @@ abstract class Gallery implements ActiveRecordInterface
     /**
      * Gets the locale for translations
      *
-     * @return    string $locale Locale to use for the translation, e.g. 'fr_FR'
+     * @return string $locale Locale to use for the translation, e.g. 'fr_FR'
      */
     public function getLocale()
     {
@@ -1832,8 +1819,8 @@ abstract class Gallery implements ActiveRecordInterface
     /**
      * Returns the current translation for a given locale
      *
-     * @param     string $locale Locale to use for the translation, e.g. 'fr_FR'
-     * @param     ConnectionInterface $con an optional connection object
+     * @param string              $locale Locale to use for the translation, e.g. 'fr_FR'
+     * @param ConnectionInterface $con    an optional connection object
      *
      * @return ChildGalleryI18n */
     public function getTranslation($locale = 'en_US', ConnectionInterface $con = null)
@@ -1866,10 +1853,10 @@ abstract class Gallery implements ActiveRecordInterface
     /**
      * Remove the translation for a given locale
      *
-     * @param     string $locale Locale to use for the translation, e.g. 'fr_FR'
-     * @param     ConnectionInterface $con an optional connection object
+     * @param string              $locale Locale to use for the translation, e.g. 'fr_FR'
+     * @param ConnectionInterface $con    an optional connection object
      *
-     * @return    ChildGallery The current object (for fluent API support)
+     * @return ChildGallery The current object (for fluent API support)
      */
     public function removeTranslation($locale = 'en_US', ConnectionInterface $con = null)
     {
@@ -1894,14 +1881,13 @@ abstract class Gallery implements ActiveRecordInterface
     /**
      * Returns the current translation
      *
-     * @param     ConnectionInterface $con an optional connection object
+     * @param ConnectionInterface $con an optional connection object
      *
      * @return ChildGalleryI18n */
     public function getCurrentTranslation(ConnectionInterface $con = null)
     {
         return $this->getTranslation($this->getLocale(), $con);
     }
-
 
         /**
          * Get the [title] column value.
@@ -1912,7 +1898,6 @@ abstract class Gallery implements ActiveRecordInterface
         {
         return $this->getCurrentTranslation()->getTitle();
     }
-
 
         /**
          * Set the value of [title] column.
@@ -1926,7 +1911,6 @@ abstract class Gallery implements ActiveRecordInterface
         return $this;
     }
 
-
         /**
          * Get the [description] column value.
          *
@@ -1936,7 +1920,6 @@ abstract class Gallery implements ActiveRecordInterface
         {
         return $this->getCurrentTranslation()->getDescription();
     }
-
 
         /**
          * Set the value of [description] column.
@@ -2025,7 +2008,6 @@ abstract class Gallery implements ActiveRecordInterface
     {
 
     }
-
 
     /**
      * Derived method to catches calls to undefined methods.

@@ -31,15 +31,10 @@ use Gallery\Event\GalleryCreateEvent;
 use Gallery\Form\GalleryCreationForm;
 use Gallery\Form\GalleryModificationForm;
 use Gallery\Model\GalleryQuery;
-use Gallery\Model\Gallery as GalleryModel;
-
-use Propel\Runtime\Exception\PropelException;
 
 use Thelia\Controller\Admin\AbstractCrudController;
-use Thelia\Controller\Admin\unknown;
 use Thelia\Core\Event\UpdatePositionEvent;
 use Thelia\Core\Security\AccessManager;
-use Thelia\Form\Exception\FormValidationException;
 
 /**
  *
@@ -52,7 +47,7 @@ use Thelia\Form\Exception\FormValidationException;
  */
 class GalleryController extends AbstractCrudController
 {
-    
+
     public function __construct()
     {
         parent::__construct(
@@ -69,7 +64,7 @@ class GalleryController extends AbstractCrudController
             GalleryEvent::GALLERY_UPDATE_POSITION
         );
     }
-    
+
     protected function getCreationForm()
     {
         return new GalleryCreationForm($this->getRequest());
@@ -79,7 +74,7 @@ class GalleryController extends AbstractCrudController
     {
         return new GalleryModificationForm($this->getRequest());
     }
-    
+
     protected function getCreationEvent($formData)
     {
         $createEvent = new GalleryCreateEvent();
@@ -169,7 +164,7 @@ class GalleryController extends AbstractCrudController
     {
         return $object->getId();
     }
-    
+
     protected function getEditionArguments()
     {
         return array(
@@ -177,10 +172,9 @@ class GalleryController extends AbstractCrudController
             'current_tab' => $this->getRequest()->get('current_tab', 'general')
         );
     }
-    
+
     protected function renderListTemplate($currentOrder)
     {
-
         return $this->render('gallery',
                 array(
                     'gallery_order' => $currentOrder
@@ -202,7 +196,7 @@ class GalleryController extends AbstractCrudController
         $args = $this->getEditionArguments();
         $this->redirect('/admin/module/Gallery/update?gallery_id='.$args['gallery_id'].'&current_tab='.$args['current_tab']);
     }
-    
+
     /**
      * Online status toggle category
      */
@@ -223,5 +217,5 @@ class GalleryController extends AbstractCrudController
         // Ajax response -> no action
         return $this->nullResponse();
     }
-   
+
 }

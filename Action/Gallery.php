@@ -39,7 +39,7 @@ use Thelia\Core\Event\UpdatePositionEvent;
 /**
  *
  * Gallery actions.
- * 
+ *
  * @package Gallery\Action
  * @author Marc LEAMRCHAND <mlemarchand@hubchannel.fr>
  *

@@ -35,10 +35,6 @@ use Thelia\Form\Exception\FormValidationException;
 use Thelia\Log\Tlog;
 use Thelia\Tools\Rest\ResponseRest;
 use Thelia\Controller\Admin\BaseAdminController;
-use Thelia\Model\CategoryQuery;
-use Thelia\Model\ProductQuery;
-use Thelia\Model\FolderQuery;
-use Thelia\Model\ContentQuery;
 
 use Gallery\Event\GalleryImageEvent;
 use Gallery\Event\GalleryImageCreateOrUpdateEvent;
@@ -66,7 +62,7 @@ class ImageController extends BaseAdminController
     /**
      * Manage how a image collection has to be saved
      *
-     * @param int    $parentId   Parent id owning images being saved
+     * @param int $parentId Parent id owning images being saved
      *
      * @return Response
      */
@@ -151,7 +147,7 @@ class ImageController extends BaseAdminController
     /**
      * Manage how a image list will be displayed in AJAX
      *
-     * @param int    $parentId   Parent id owning images being saved
+     * @param int $parentId Parent id owning images being saved
      *
      * @return Response
      */
@@ -167,7 +163,7 @@ class ImageController extends BaseAdminController
     /**
      * Manage how an image list will be uploaded in AJAX
      *
-     * @param int    $parentId   Parent id owning images being saved
+     * @param int $parentId Parent id owning images being saved
      *
      * @return Response
      */
@@ -183,7 +179,7 @@ class ImageController extends BaseAdminController
     /**
      * Manage how an image is viewed
      *
-     * @param int    $imageId    Parent id owning images being saved
+     * @param int $imageId Parent id owning images being saved
      *
      * @return Response
      */
@@ -192,7 +188,7 @@ class ImageController extends BaseAdminController
         if (null !== $response = $this->checkAuth($this->resourceCode, array(), AccessManager::UPDATE)) {
             return $response;
         }
-       
+
         try {
             $fileManager = new GalleryFileManager();
             $image = GalleryImageQuery::create()->findPk($imageId);
@@ -211,7 +207,7 @@ class ImageController extends BaseAdminController
     /**
      * Manage how an image is updated
      *
-     * @param int    $imageId    Parent id owning images being saved
+     * @param int $imageId Parent id owning images being saved
      *
      * @return Response
      */
@@ -249,7 +245,7 @@ class ImageController extends BaseAdminController
             $imageUpdated = $event->getModelImage();
 
             $this->adminLogAppend($this->resourceCode, AccessManager::UPDATE, sprintf('Image with Ref %s (ID %d) modified', $imageUpdated->getTitle(), $imageUpdated->getId()));
-        
+
             if ($this->getRequest()->get('save_mode') == 'close') {
                 $redirectUrl = $fileManager->getRedirectionUrl($image->getGalleryId());
                 $this->redirectToRoute($redirectUrl);
@@ -287,7 +283,7 @@ class ImageController extends BaseAdminController
     /**
      * Manage how a image has to be deleted (AJAX)
      *
-     * @param int    $imageId    Parent id owning image being deleted
+     * @param int $imageId Parent id owning image being deleted
      *
      * @return Response
      */
@@ -425,9 +421,9 @@ class ImageController extends BaseAdminController
     /**
      * Log error message
      *
-     * @param string     $action     Creation|Update|Delete
-     * @param string     $message    Message to log
-     * @param \Exception $e          Exception to log
+     * @param string     $action  Creation|Update|Delete
+     * @param string     $message Message to log
+     * @param \Exception $e       Exception to log
      *
      * @return $this
      */
@@ -447,8 +443,8 @@ class ImageController extends BaseAdminController
     /**
      * Create GalleryImage Event instance
      *
-     * @param GalleryImage                                        $model      Image model
-     * @param array                                               $data       Post data
+     * @param GalleryImage $model Image model
+     * @param array        $data  Post data
      *
      * @return GalleryImageCreateOrUpdateEvent
      */
@@ -472,11 +468,11 @@ class ImageController extends BaseAdminController
         if (isset($data['type_id'])) {
             $model->setTypeId($data['type_id']);
         }
-        
+
         if (isset($data['subtype_id'])) {
             $model->setSubTypeId($data['subtype_id']);
         }
-        
+
         if (isset($data['visible'])) {
             $model->setVisible($data['visible']);
         }
@@ -486,37 +482,35 @@ class ImageController extends BaseAdminController
         return $imageCreateEvent;
     }
 
-
     public function getAvailableTypesAction($type)
     {
         $result = array();
 
         $object = ucfirst($type);
         $queryClass   = sprintf("\Thelia\Model\%sQuery", $object);
-        
+
         $method = new \ReflectionMethod($queryClass, 'create');
         $search = $method->invoke(null); // Static !
-        
+
         $items = $search->joinWithI18n($this->getCurrentEditionLocale())->find();
-    
+
         if ($items !== null) {
 
             foreach ($items as $item) {
                 $result[] = array('id' => $item->getId(), 'title' => $item->getTitle());
             }
         }
-        
 
         return $this->jsonResponse(json_encode($result));
     }
-    
+
     public function getAvailableSubTypesAction($parent, $parentId, $type)
     {
         $result = array();
-        
+
         $object = ucfirst($parent);
         $queryClass = sprintf("\Thelia\Model\%sQuery", $object);
-        
+
         $method = new \ReflectionMethod($queryClass, 'create');
         $search = $method->invoke(null);
 
@@ -539,7 +533,7 @@ class ImageController extends BaseAdminController
                 }
             }
         }
-        
+
         return $this->jsonResponse(json_encode($result));
     }
 

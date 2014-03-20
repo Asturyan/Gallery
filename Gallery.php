@@ -25,14 +25,9 @@ namespace Gallery;
 
 use Propel\Runtime\Connection\ConnectionInterface;
 
-use Thelia\Core\HttpFoundation\Response;
-use Thelia\Core\Template\TemplateDefinition;
-use Thelia\Model\Base\Template;
-use Thelia\Model\ModuleImageQuery;
 use Thelia\Module\BaseModule;
 use Thelia\Module\BaseModuleInterface;
 use Thelia\Install\Database;
-use Thelia\Model\ModuleQuery;
 
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -43,12 +38,12 @@ class Gallery extends BaseModule implements BaseModuleInterface
         $database = new Database($con->getWrappedConnection());
 
         $database->insertSql(null, array(__DIR__ . '/Config/thelia.sql'));
-        
+
         $fs = new Filesystem();
-        
+
         if (!$fs->exists(THELIA_LOCAL_DIR.'/media/images/gallery')) $fs->mkdir(THELIA_LOCAL_DIR.'/media/images/gallery', 0777);
     }
-    
+
     public function getCode()
     {
         return 'Gallery';

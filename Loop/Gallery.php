@@ -29,7 +29,6 @@ use Thelia\Core\Template\Element\BaseI18nLoop;
 use Thelia\Core\Template\Element\LoopResult;
 use Thelia\Core\Template\Element\LoopResultRow;
 use Thelia\Core\Template\Element\PropelSearchLoopInterface;
-use Thelia\Core\Template\Element\SearchLoopInterface;
 use Thelia\Core\Template\Loop\Argument\ArgumentCollection;
 use Thelia\Core\Template\Loop\Argument\Argument;
 use Thelia\Type\TypeCollection;
@@ -89,7 +88,7 @@ class Gallery extends BaseI18nLoop implements PropelSearchLoopInterface
         if (!is_null($id)) {
             $search->filterById($id, Criteria::IN);
         }
-        
+
         $exclude = $this->getExclude();
 
         if (!is_null($exclude)) {
@@ -135,7 +134,7 @@ class Gallery extends BaseI18nLoop implements PropelSearchLoopInterface
                     break;
             }
         }
-        
+
         /* @todo */
         $notEmpty  = $this->getNot_empty();
 

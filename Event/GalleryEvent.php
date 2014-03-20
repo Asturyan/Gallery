@@ -36,7 +36,7 @@ use Thelia\Core\Event\ActionEvent;
 class GalleryEvent extends ActionEvent
 {
     public $gallery = null;
-    
+
     const GALLERY_CREATE            = 'gallery.action.create';
     const GALLERY_UPDATE            = 'gallery.action.update';
     const GALLERY_DELETE            = 'gallery.action.delete';
