@@ -67,6 +67,7 @@ class GalleryImage extends BaseI18nLoop implements PropelSearchLoopInterface
     {
         $collection = new ArgumentCollection(
             Argument::createIntListTypeArgument('id'),
+            Argument::createBooleanTypeArgument('with_prev_next_info', false),
             Argument::createIntListTypeArgument('exclude'),
             Argument::createBooleanOrBothTypeArgument('visible', 1),
             new Argument(
@@ -233,14 +234,40 @@ class GalleryImage extends BaseI18nLoop implements PropelSearchLoopInterface
                     ->set("TYPE"                , $result->getType())
                     ->set("SUBTYPE_ID"          , $result->getSubTypeId())
                     ->set("TYPE_ID"             , $result->getTypeId())
+                    ->set("URL"                 , $result->getUrl())
                     ->set("VISIBLE"             , $result->getVisible() ? "1" : "0")
                     ->set("POSITION"            , $result->getPosition())
                 ;
+                
+                if ($this->getBackend_context() || $this->getWithPrevNextInfo()) {
+                    // Find previous and next image gallery
+                    $previous = GalleryImageQuery::create()
+                        ->filterByPosition($result->getPosition(), Criteria::LESS_THAN)
+                        ->filterByGalleryId($result->getGalleryId())
+                        ->orderByPosition(Criteria::DESC)
+                        ->findOne()
+                    ;
+
+                    $next = GalleryImageQuery::create()
+                        ->filterByPosition($result->getPosition(), Criteria::LESS_THAN)
+                        ->filterByGalleryId($result->getGalleryId())
+                        ->orderByPosition(Criteria::ASC)
+                        ->findOne()
+                    ;
+    
+                    $loopResultRow
+                        ->set("HAS_PREVIOUS"            , $previous != null ? 1 : 0)
+                        ->set("HAS_NEXT"                , $next != null ? 1 : 0)
+    
+                        ->set("PREVIOUS"                , $previous != null ? $previous->getId() : -1)
+                        ->set("NEXT"                    , $next != null ? $next->getId() : -1)
+                    ;
+                }
 
                 $loopResult->addRow($loopResultRow);
             } catch (\Exception $ex) {
                 // Ignore the result and log an error
-        Tlog::getInstance()->addError("Failed to process image in image loop: ", $ex->getMessage(), " - Arguments:", $this->args);
+                Tlog::getInstance()->addError("Failed to process image in image loop: ", $ex->getMessage(), " - Arguments:", $this->args);
             }
 
         }

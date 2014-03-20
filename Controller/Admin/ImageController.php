@@ -476,6 +476,10 @@ class ImageController extends BaseAdminController
         if (isset($data['visible'])) {
             $model->setVisible($data['visible']);
         }
+        
+        if (isset($data['url'])) {
+            $model->setUrl($data['url']);
+        }
 
         $imageCreateEvent->setModelImage($model);
 

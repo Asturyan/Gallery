@@ -23,10 +23,17 @@
 		    <div class="col-md-12 general-block-decorator">
 			<div class="row">
 
-			    <div class="col-md-12 title title-without-tabs">
+			    <div class="col-md-7 title title-without-tabs">
 			       {intl l='Edit image "%name"' name=$TITLE}
 			    </div>
-
+			    
+			    <div class="col-md-5 actions">
+                                <a {if $HAS_PREVIOUS != 0}href="{url path='/admin/module/Gallery/image/{$PREVIOUS}/update'}"{else}disabled="disabled"{/if} class="btn btn-default" title="{intl l='Edit previous gallery'}"><span class="glyphicon glyphicon-arrow-left"></span></a>
+                                <a {if $HAS_NEXT != 0}href="{url path='/admin/module/Gallery/image/{$NEXT}/update'}"{else}disabled="disabled"{/if} class="btn btn-default" title="{intl l='Edit next gallery'}"><span class="glyphicon glyphicon-arrow-right"></span></a>
+                            </div>
+			</div>
+    
+                        <div class="row">
 			    <div class="form-container">
 				<div class="col-md-12">
 
