@@ -32,7 +32,7 @@ return array(
     'Select a category...' => 'Select a category...',
     'Select a category' => 'Select a category',
     'Select a category and click (+) to use it' => 'Select a category and click (+) to use it',
-    'No available category' => 'No available category'
+    'No available category' => 'No available category',
     'Select a product...' => 'Select a product...',
     'Select a product and click (+) to use it' => 'Select a product and click (+) to use it',
     'No available product for this category' => 'No available product for this category',
