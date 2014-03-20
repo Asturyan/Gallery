@@ -51,7 +51,7 @@ use Gallery\Model\GalleryQuery;
  * @package Gallery\Loop
  * @author Marc LEMARCHAND <mlemarchand@hubchannel.fr>
  */
-class GalleryList extends BaseI18nLoop implements PropelSearchLoopInterface
+class Gallery extends BaseI18nLoop implements PropelSearchLoopInterface
 {
     protected $timestampable = true;
 
