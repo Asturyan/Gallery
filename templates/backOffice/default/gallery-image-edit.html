@@ -14,7 +14,7 @@
                 <ul class="breadcrumb">
         	    <li><a href="{url path='/admin/home'}">{intl l="Home"}</a></li>
 		    <li><a href="{url path='/admin/modules'}">{intl l="Modules"}</a></li>
-		    <li><a href="{url path='/admin/module/gallery'}">{intl l="Gallery"}</a></li>
+		    <li><a href="{url path='/admin/module/Gallery'}">{intl l="Gallery"}</a></li>
                     <li><a href="{url path="{$redirectUrl}"}">{intl l="Image"}</a></li>
                     <li>{intl l='Editing image "%name"' name=$TITLE}</li>
                 </ul>
@@ -94,7 +94,7 @@
 							    <option value="category" {if $TYPE == 'category'}selected="selected"{/if}>{intl l="Category"}</option>
 							    <option value="folder" {if $TYPE == 'folder'}selected="selected"{/if}>{intl l="Folder"}</option>
 							    <option value="content" {if $TYPE == 'content'}selected="selected"{/if}>{intl l="Content"}</option>
-							    <option value="external" {if $TYPE == 'external'}selected="selected"{/if}>{intl l="External"}</option>
+							    <option value="external" {if $TYPE == 'external'}selected="selected"{/if}>{intl l="External Link"}</option>
 							</select>
 						    </div>
 						{/form_field}
@@ -109,7 +109,7 @@
 							</span>
 						    </div>
 		
-						    <span class="help-block">{intl l='Select a category and click (+) to add it'}</span>
+						    <span class="help-block">{intl l='Select a category and click (+) to use it'}</span>
 						</div>
 						
 						<div id="category_selector_empty" class="ajax-selector hide">
@@ -142,7 +142,7 @@
 							</span>
 						    </div>
 		
-						    <span class="help-block">{intl l='Select a product and click (+) to add it'}</span>
+						    <span class="help-block">{intl l='Select a product and click (+) to use it'}</span>
 						</div>
 						
 						<div id="product_selector_empty" class="ajax-selector hide">
@@ -161,7 +161,7 @@
 							</span>
 						    </div>
 		
-						    <span class="help-block">{intl l='Select a folder and click (+) to add it'}</span>
+						    <span class="help-block">{intl l='Select a folder and click (+) to use it'}</span>
 						</div>
 						
 						<div id="folder_selector_empty" class="ajax-selector hide">
@@ -187,7 +187,7 @@
 						<div id="content_selector" class="ajax-selector hide">
 						    <div class="input-group">
 							<select name="content_id" id="content_id" class="form-control">
-							    <option value="">{intl l='Select a product...'}</option>
+							    <option value="">{intl l='Select a content...'}</option>
 							</select>
 							<span class="input-group-btn" id="content_add_button">
 							   <button class="btn btn-default btn-primary action-btn btn-ajax" type="submit" data-type="content"><span class="glyphicon glyphicon-plus-sign"></span></button>
