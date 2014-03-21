@@ -214,7 +214,7 @@ class GalleryImage extends BaseI18nLoop implements PropelSearchLoopInterface
             );
 
             $event->setSourceFilepath($source_filepath);
-             $event->setCacheSubdirectory('gallery');
+            $event->setCacheSubdirectory('gallery');
 
             try {
                 // Dispatch image processing event
