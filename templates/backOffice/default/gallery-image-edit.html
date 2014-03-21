@@ -201,7 +201,7 @@
 							</span>
 						    </div>
 		
-						    <span class="help-block">{intl l='Select a content and click (+) to add it'}</span>
+						    <span class="help-block">{intl l='Select a content and click (+) to use it'}</span>
 						</div>
 						
 						<div id="content_selector_empty" class="ajax-selector hide">
@@ -218,6 +218,20 @@
 							</div>
 						    </div>
 						{/form_field}
+						
+						<div class="form-group">
+						    <label for="" class="control-label">
+							{intl l='Current'} :
+						    </label>
+							
+						    {intl l="$TYPE"} > {$CURRENT_TYPE}
+						    <div class="clearfix"></div>
+						    <label for="" class="control-label hide">
+							{intl l='New'} :
+						    </label>
+							
+						    <span id="new_type"></span>		
+						</div>
 						
 						{form_field form=$form field='visible'}
 						    <div class="form-group {if $error}has-error{/if}">
@@ -394,6 +408,14 @@ $(function() {
 	e.preventDefault();
 	var type = $(this).data('type');
 	$('#type_id').val($('#' + type + '_id').val());
+	var parent = '';
+	var text = $('#type option:selected').text() + ' > ';
+	if (type == 'product') parent = 'category';
+	else if (type == 'content') parent = 'folder';
+	if (parent) text += $('#' + type + '_' + parent + '_id option:selected').text() + ' > ';
+	text += $('#' + type + '_id option:selected').text();
+	$('#new_type').text(text);
+	$('#new_type').prev().removeClass('hide');
     });
     if (current_type) $('#type').change();
     if (current_type_id) $('#subtype_id').val(current_type_id);

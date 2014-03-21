@@ -221,6 +221,37 @@ class GalleryImage extends BaseI18nLoop implements PropelSearchLoopInterface
                 $this->dispatcher->dispatch(GalleryImageEvent::IMAGE_PROCESS, $event);
 
                 $loopResultRow = new LoopResultRow($result);
+                
+                $currentType = '';
+                
+                if ($result->getType()) {
+                    if ($result->getType() != 'external') {
+                        if ($result->getSubTypeId()) {
+                            $object = ucfirst($result->getType() == 'product'?'category':'folder');
+                            $queryClass = sprintf("\Thelia\Model\%sQuery", $object);
+        
+                            $method = new \ReflectionMethod($queryClass, 'create');
+                            $search = $method->invoke(null);
+                    
+                            $item = $search->joinWithI18n($this->locale)->filterById($result->getSubTypeId())->findOne();
+                            
+                            $currentType .= $item->getTitle(). ' > ';
+                        }
+                        
+                        $object = ucfirst($result->getType());
+                        $queryClass = sprintf("\Thelia\Model\%sQuery", $object);
+    
+                        $method = new \ReflectionMethod($queryClass, 'create');
+                        $search = $method->invoke(null);
+                
+                        $item = $search->joinWithI18n($this->locale)->filterById($result->getTypeId())->findOne();
+                        
+                        $currentType .= $item->getTitle();
+                    } else {
+                        $currentType .= $result->getUrl();
+                        
+                    }
+                }
 
                 $loopResultRow
                     ->set("ID"                  , $result->getId())
@@ -235,6 +266,7 @@ class GalleryImage extends BaseI18nLoop implements PropelSearchLoopInterface
                     ->set("SUBTYPE_ID"          , $result->getSubTypeId())
                     ->set("TYPE_ID"             , $result->getTypeId())
                     ->set("URL"                 , $result->getUrl())
+                    ->set("CURRENT_TYPE"        , $currentType)
                     ->set("VISIBLE"             , $result->getVisible() ? "1" : "0")
                     ->set("POSITION"            , $result->getPosition())
                 ;

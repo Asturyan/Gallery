@@ -46,5 +46,6 @@ return array(
     'Sorry, image ID=%id was not found.' => 'Sorry, image ID=%id was not found.',
     'There is no images attached to this gallery.' => 'There is no images attached to this gallery.',
     'This image is online.' => 'This image is online.',
-    'Saving images for %parentName% parent id %parentId% (gallery)' => 'Saving images for %parentName% parent id %parentId% (gallery)'
+    'Saving images for %parentName% parent id %parentId% (gallery)' => 'Saving images for %parentName% parent id %parentId% (gallery)',
+    'Current' => 'Current'
 );
