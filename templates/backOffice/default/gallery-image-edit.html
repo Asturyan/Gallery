@@ -225,12 +225,14 @@
 						{/form_field}
 						
 						<div class="form-group">
+						    {if $CURRENT_TYPE}
 						    <label for="" class="control-label">
 							{intl l='Current'} :
 						    </label>
 							
 						    {intl l="$TYPE"} > {$CURRENT_TYPE}
 						    <div class="clearfix"></div>
+						    {/if}
 						    <label for="" class="control-label hide">
 							{intl l='New'} :
 						    </label>
