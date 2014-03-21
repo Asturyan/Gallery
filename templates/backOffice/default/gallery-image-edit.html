@@ -214,7 +214,12 @@
 						    <div id="external_selector" class="ajax-selector hide">
 							<div class="form-group {if $error}has-error{/if}">
 							    <label for="{$label_attr.for}" class="control-label">{$label} : </label>
-							    <input type="text" id="{$label_attr.for}" name="{$name}" class="form-control" value="{$URL}" title="{$label}" placeholder="{intl l='Url'}">
+							    <div class="input-group">
+								<input type="text" id="{$label_attr.for}" name="{$name}" class="form-control" value="{$URL}" title="{$label}" placeholder="{intl l='Url'}">
+								<span class="input-group-btn" id="external_add_button">
+								    <button class="btn btn-default btn-primary action-btn btn-ajax" type="submit" data-type="external"><span class="glyphicon glyphicon-plus-sign"></span></button>
+								</span>
+							    </div>
 							</div>
 						    </div>
 						{/form_field}
@@ -413,7 +418,8 @@ $(function() {
 	if (type == 'product') parent = 'category';
 	else if (type == 'content') parent = 'folder';
 	if (parent) text += $('#' + type + '_' + parent + '_id option:selected').text() + ' > ';
-	text += $('#' + type + '_id option:selected').text();
+	if (type == 'external') text += $('#url').val();
+	else text += $('#' + type + '_id option:selected').text();
 	$('#new_type').text(text);
 	$('#new_type').prev().removeClass('hide');
     });

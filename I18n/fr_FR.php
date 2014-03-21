@@ -29,6 +29,7 @@ return array(
     'Folder' => 'Dossier',
     'Content' => 'Contenu',
     'External Link' => 'Lien Externe',
+    'external' => 'Lien Externe',
     'Select a category...' => 'Sélectionner une rubrique...',
     'Select a category' => 'Sélectionner une rubrique',
     'Select a category and click (+) to use it' => 'Sélectionner une rubrique et cliquez sur le bouton (+) pour l\'utiliser',

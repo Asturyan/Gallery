@@ -514,6 +514,7 @@ class ImageController extends BaseAdminController
 
         $object = ucfirst($parent);
         $queryClass = sprintf("\Thelia\Model\%sQuery", $object);
+        $filterMethod = sprintf("filterBy%s", $object);
 
         $method = new \ReflectionMethod($queryClass, 'create');
         $search = $method->invoke(null);
@@ -525,10 +526,12 @@ class ImageController extends BaseAdminController
             $queryClass = sprintf("\Thelia\Model\%sQuery", $object);
             $method = new \ReflectionMethod($queryClass, 'create');
             $search = $method->invoke(null);
+            
+            $method = new \ReflectionMethod($queryClass, $filterMethod);
+            $method->invoke($search, $items, Criteria::IN);
 
             $list = $search
                 ->joinWithI18n($this->getCurrentEditionLocale())
-                ->filterByCategory($items, Criteria::IN)
                 ->find();
 
             if ($list !== null) {

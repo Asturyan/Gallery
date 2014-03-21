@@ -29,6 +29,7 @@ return array(
     'Folder' => 'Folder',
     'Content' => 'Content',
     'External Link' => 'External Link',
+    'external' => 'External Link',
     'Select a category...' => 'Select a category...',
     'Select a category' => 'Select a category',
     'Select a category and click (+) to use it' => 'Select a category and click (+) to use it',
