@@ -41,7 +41,7 @@ class Gallery extends BaseModule implements BaseModuleInterface
 
         $fs = new Filesystem();
 
-        if (!$fs->exists(THELIA_LOCAL_DIR.'/media/images/gallery')) $fs->mkdir(THELIA_LOCAL_DIR.'/media/images/gallery', 0777);
+        if (!$fs->exists(THELIA_LOCAL_DIR.'media/images/gallery')) $fs->mkdir(THELIA_LOCAL_DIR.'media/images/gallery', 0777);
     }
 
     public function getCode()
