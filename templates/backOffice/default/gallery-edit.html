@@ -3,7 +3,7 @@
 {block name="check-resource"}module.Gallery{/block}
 {block name="check-access"}update{/block}
 
-{block name="page-title"}{intl l='Edit gallery'}{/block}
+{block name="page-title"}{intl l='Edit gallery' d='gallery'}{/block}
 
 {block name="main-content"}
 
@@ -13,8 +13,8 @@
                 <ul class="breadcrumb">
                     <li><a href="{url path='/admin/home'}">{intl l="Home"}</a></li>
                     <li><a href="{url path='/admin/modules'}">{intl l="Modules"}</a></li>
-                    <li><a href="{url path='/admin/module/Gallery'}">{intl l="Gallery"}</a></li>
-                    <li>{intl l='Editing gallery "%name"' name=$TITLE}</li>
+                    <li><a href="{url path='/admin/module/Gallery'}">{intl l="Gallery" d='gallery'}</a></li>
+                    <li>{intl l='Editing gallery "%name"' name=$TITLE d='gallery'}</li>
                 </ul>
 
                 <div class="row">
@@ -26,7 +26,7 @@
                     <div class="col-md-12 general-block-decorator">
                         <div class="row">
                             <div class="col-md-7 title">
-                                {intl l='Edit gallery %title' title=$TITLE}
+                                {intl l='Edit gallery %title' title=$TITLE d='gallery'}
                             </div>
     
                             <div class="col-md-5 actions">
@@ -98,7 +98,7 @@
                                                     close_url=$close_url
                                                 }
     
-                                                <small>{intl l='Gallery created on %date_create. Last modification: %date_change' date_create="{format_date date=$CREATE_DATE}" date_change="{format_date date=$UPDATE_DATE}"}</small>
+                                                <small>{intl l='Gallery created on %date_create. Last modification: %date_change' date_create="{format_date date=$CREATE_DATE}" date_change="{format_date date=$UPDATE_DATE}" d='gallery'}</small>
     
                                             </form>
                                             {/form}

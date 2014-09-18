@@ -23,6 +23,8 @@
 
 namespace Gallery\Controller\Admin;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 use Gallery\Event\GalleryToggleVisibilityEvent;
 use Gallery\Event\GalleryDeleteEvent;
 use Gallery\Event\GalleryEvent;
@@ -35,6 +37,8 @@ use Gallery\Model\GalleryQuery;
 use Thelia\Controller\Admin\AbstractCrudController;
 use Thelia\Core\Event\UpdatePositionEvent;
 use Thelia\Core\Security\AccessManager;
+
+use Thelia\Tools\URL;
 
 /**
  *
@@ -183,7 +187,7 @@ class GalleryController extends AbstractCrudController
 
     protected function redirectToListTemplate()
     {
-        $this->redirect('/admin/module/Gallery');
+       return RedirectResponse::create(URL::getInstance()->absoluteUrl('/admin/module/Gallery'));
     }
 
     protected function renderEditionTemplate()
@@ -194,7 +198,8 @@ class GalleryController extends AbstractCrudController
     protected function redirectToEditionTemplate()
     {
         $args = $this->getEditionArguments();
-        $this->redirect('/admin/module/Gallery/update?gallery_id='.$args['gallery_id'].'&current_tab='.$args['current_tab']);
+
+        return RedirectResponse::create(URL::getInstance()->absoluteUrl('/admin/module/Gallery/update?gallery_id='.$args['gallery_id'].'&current_tab='.$args['current_tab']));
     }
 
     /**

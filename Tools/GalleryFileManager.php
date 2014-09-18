@@ -22,7 +22,7 @@
 /*************************************************************************************/
 namespace Gallery\Tools;
 
-use Thelia\Tools\FileManager;
+use Thelia\Files\FileManager;
 
 /**
  *

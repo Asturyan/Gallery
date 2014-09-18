@@ -45,7 +45,7 @@ class GalleryCreationForm extends BaseForm
                 "constraints" => array(
                     new NotBlank()
                 ),
-                "label" => Translator::getInstance()->trans("Gallery title *"),
+                "label" => Translator::getInstance()->trans("Gallery title *", [], 'gallery'),
                 "label_attr" => array(
                     "for" => "title"
                 )
@@ -57,7 +57,7 @@ class GalleryCreationForm extends BaseForm
                "label_attr" => array("for" => "locale_create")
             ))
             ->add("visible", "integer", array(
-                "label" => Translator::getInstance()->trans("This gallery is online."),
+                "label" => Translator::getInstance()->trans("This gallery is online.", [], 'gallery'),
                 "label_attr" => array("for" => "visible_create")
             ))
         ;

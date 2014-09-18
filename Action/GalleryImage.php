@@ -66,9 +66,10 @@ class GalleryImage extends Image implements EventSubscriberInterface
     public function processImage(ImageEvent $event)
     {
 
+        $subdir      = $event->getCacheSubdirectory();
         $source_file = $event->getSourceFilepath();
 
-        if (null == $source_file) {
+        if (null == $subdir || null == $source_file) {
             throw new \InvalidArgumentException("Cache sub-directory and source file path cannot be null");
         }
 

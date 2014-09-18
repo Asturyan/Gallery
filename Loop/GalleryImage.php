@@ -39,6 +39,7 @@ use Thelia\Type\EnumListType;
 use Thelia\Type\EnumType;
 
 use Gallery\Event\GalleryImageEvent;
+use Thelia\Core\Event\TheliaEvents;
 use Gallery\Model\GalleryImageQuery;
 /**
  *
@@ -218,38 +219,38 @@ class GalleryImage extends BaseI18nLoop implements PropelSearchLoopInterface
 
             try {
                 // Dispatch image processing event
-                $this->dispatcher->dispatch(GalleryImageEvent::IMAGE_PROCESS, $event);
+                $this->dispatcher->dispatch(TheliaEvents::IMAGE_PROCESS, $event);
 
                 $loopResultRow = new LoopResultRow($result);
-                
+
                 $currentType = '';
-                
+
                 if ($result->getType()) {
                     if ($result->getType() != 'external') {
                         if ($result->getSubTypeId()) {
                             $object = ucfirst($result->getType() == 'product'?'category':'folder');
                             $queryClass = sprintf("\Thelia\Model\%sQuery", $object);
-        
+
                             $method = new \ReflectionMethod($queryClass, 'create');
                             $search = $method->invoke(null);
-                    
+
                             $item = $search->joinWithI18n($this->locale)->filterById($result->getSubTypeId())->findOne();
-                            
+
                             $currentType .= $item->getTitle(). ' > ';
                         }
-                        
+
                         $object = ucfirst($result->getType());
                         $queryClass = sprintf("\Thelia\Model\%sQuery", $object);
-    
+
                         $method = new \ReflectionMethod($queryClass, 'create');
                         $search = $method->invoke(null);
-                
+
                         $item = $search->joinWithI18n($this->locale)->filterById($result->getTypeId())->findOne();
-                        
+
                         $currentType .= $item->getTitle();
                     } else {
                         $currentType .= $result->getUrl();
-                        
+
                     }
                 }
 
@@ -270,7 +271,7 @@ class GalleryImage extends BaseI18nLoop implements PropelSearchLoopInterface
                     ->set("VISIBLE"             , $result->getVisible() ? "1" : "0")
                     ->set("POSITION"            , $result->getPosition())
                 ;
-                
+
                 if ($this->getBackend_context() || $this->getWithPrevNextInfo()) {
                     // Find previous and next image gallery
                     $previous = GalleryImageQuery::create()
@@ -286,11 +287,11 @@ class GalleryImage extends BaseI18nLoop implements PropelSearchLoopInterface
                         ->orderByPosition(Criteria::ASC)
                         ->findOne()
                     ;
-    
+
                     $loopResultRow
                         ->set("HAS_PREVIOUS"            , $previous != null ? 1 : 0)
                         ->set("HAS_NEXT"                , $next != null ? 1 : 0)
-    
+
                         ->set("PREVIOUS"                , $previous != null ? $previous->getId() : -1)
                         ->set("NEXT"                    , $next != null ? $next->getId() : -1)
                     ;

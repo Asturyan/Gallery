@@ -22,6 +22,7 @@
 /*************************************************************************************/
 
 namespace Gallery\Event;
+use Thelia\Core\Event\File\FileCreateOrUpdateEvent;
 
 /**
  *
@@ -31,36 +32,15 @@ namespace Gallery\Event;
  * @author Marc LEMARCHAND <mlemarchand@hubchannel.fr>
  *
  */
-class GalleryImageCreateOrUpdateEvent extends GalleryImageEvent
+class GalleryImageCreateOrUpdateEvent extends FileCreateOrUpdateEvent
 {
 
     /** @var Gallery\Model\GalleryImage model to save */
-    protected $oldModelImage;
     protected $type;
     protected $type_id;
     protected $subtype_id;
     protected $url;
     protected $visible;
-
-    /**
-     * Set old model value
-     *
-     * @param \Gallery\Model\GalleryImage $oldModelImage
-     */
-    public function setOldModelImage($oldModelImage)
-    {
-        $this->oldModelImage = $oldModelImage;
-    }
-
-    /**
-     * Get old model value
-     *
-     * @return \Gallery\Model\GalleryImage
-     */
-    public function getOldModelImage()
-    {
-        return $this->oldModelImage;
-    }
 
     /**
      * @param mixed $type

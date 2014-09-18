@@ -97,30 +97,6 @@ class GalleryImageEvent extends ImageEvent
     }
 
     /**
-     * Set Image to save
-     *
-     * @param $image \Gallery\Model\GalleryImage
-     *
-     * @return $this
-     */
-    public function setModelImage(GalleryImage $image)
-    {
-        $this->modelImage = $image;
-
-        return $this;
-    }
-
-    /**
-     * Get Image being saved
-     *
-     * @return \Gallery\Model\GalleryImage
-     */
-    public function getModelImage()
-    {
-        return $this->modelImage;
-    }
-
-    /**
      * Set Image parent id
      *
      * @param int $parentId Image parent id
@@ -197,9 +173,9 @@ class GalleryImageEvent extends ImageEvent
      *
      * @param \Gallery\Model\GalleryImage $oldModelImage
      */
-    public function setOldModelImage($oldModelImage)
+    public function setOldModel($oldModelImage)
     {
-        $this->oldModelImage = $oldModelImage;
+        $this->oldModel = $oldModelImage;
     }
 
     /**
@@ -207,9 +183,9 @@ class GalleryImageEvent extends ImageEvent
      *
      * @return \Gallery\Model\GalleryImage
      */
-    public function getOldModelImage()
+    public function getOldModel()
     {
-        return $this->oldModelImage;
+        return $this->oldModel;
     }
 
 }

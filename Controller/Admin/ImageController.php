@@ -31,19 +31,18 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Thelia\Core\Event\UpdateFilePositionEvent;
 use Thelia\Core\HttpFoundation\Response;
 use Thelia\Core\Security\AccessManager;
+use Thelia\Core\Event\TheliaEvents;
 use Thelia\Form\Exception\FormValidationException;
 use Thelia\Log\Tlog;
 use Thelia\Tools\Rest\ResponseRest;
 use Thelia\Controller\Admin\BaseAdminController;
 
-use Gallery\Event\GalleryImageEvent;
 use Gallery\Event\GalleryImageCreateOrUpdateEvent;
 use Gallery\Event\GalleryImageDeleteEvent;
 use Gallery\Form\GalleryImageModificationForm;
 use Gallery\Model\GalleryQuery;
 use Gallery\Model\GalleryImage;
 use Gallery\Model\GalleryImageQuery;
-use Gallery\Tools\GalleryFileManager;
 
 /**
  *
@@ -58,6 +57,16 @@ class ImageController extends BaseAdminController
 {
 
     private $resourceCode = 'gallery_image';
+
+    /**
+     * Get the FileManager
+     *
+     * @return FileManager
+     */
+    public function getFileManager()
+    {
+        return $this->container->get('thelia.file_manager');
+    }
 
     /**
      * Manage how a image collection has to be saved
@@ -76,19 +85,20 @@ class ImageController extends BaseAdminController
             /** @var UploadedFile $fileBeingUploaded */
             $fileBeingUploaded = $this->getRequest()->files->get('file');
 
-            $fileManager = new GalleryFileManager();
+            $fileManager = $this->getFileManager();
 
             // Validate if file is too big
             if ($fileBeingUploaded->getError() == 1) {
                 $message = $this->getTranslator()
-                ->trans(
-                    'File is too heavy, please retry with a file having a size less than %size%.',
-                    array('%size%' => ini_get('post_max_size')),
-                    'image'
-                );
+                    ->trans(
+                        'File is too large, please retry with a file having a size less than %size%.',
+                        array('%size%' => ini_get('upload_max_filesize')),
+                        'core'
+                    );
 
                 return new ResponseRest($message, 'text', 403);
             }
+
             // Validate if it is a image or file
             if (!$fileManager->isImage($fileBeingUploaded->getMimeType())) {
                 $message = $this->getTranslator()
@@ -110,18 +120,19 @@ class ImageController extends BaseAdminController
 
             $defaultTitle = $parentModel->getTitle();
             $imageModel->setGalleryId($parentId);
+            $imageModel->setLocale($this->getCurrentEditionLocale());
             $imageModel->setTitle($defaultTitle);
 
             $imageCreateOrUpdateEvent = new GalleryImageCreateOrUpdateEvent(
                 $parentId
             );
-            $imageCreateOrUpdateEvent->setModelImage($imageModel);
+            $imageCreateOrUpdateEvent->setModel($imageModel);
             $imageCreateOrUpdateEvent->setUploadedFile($fileBeingUploaded);
             $imageCreateOrUpdateEvent->setParentName($parentModel->getTitle());
 
             // Dispatch Event to the Action
             $this->dispatch(
-                GalleryImageEvent::IMAGE_SAVE,
+                TheliaEvents::IMAGE_SAVE,
                 $imageCreateOrUpdateEvent
             );
 
@@ -190,9 +201,9 @@ class ImageController extends BaseAdminController
         }
 
         try {
-            $fileManager = new GalleryFileManager();
+            $imageModel = new GalleryImage();
             $image = GalleryImageQuery::create()->findPk($imageId);
-            $redirectUrl = $fileManager->getRedirectionUrl($image->getGalleryId());
+            $redirectUrl = $imageModel->getRedirectionUrl($image->getGalleryId());
 
             return $this->render('gallery-image-edit', array(
                 'imageId' => $imageId,
@@ -219,7 +230,7 @@ class ImageController extends BaseAdminController
 
         $message = false;
 
-        $fileManager = new GalleryFileManager();
+        $imageModel = new GalleryImage();
         $imageModification = new GalleryImageModificationForm($this->getRequest());
 
         try {
@@ -232,7 +243,7 @@ class ImageController extends BaseAdminController
             $form = $this->validateForm($imageModification);
 
             $event = $this->createImageEventInstance($image, $form->getData());
-            $event->setOldModelImage($oldImage);
+            $event->setOldModel($oldImage);
 
             $files = $this->getRequest()->files;
             $fileForm = $files->get($imageModification->getName());
@@ -240,17 +251,18 @@ class ImageController extends BaseAdminController
                 $event->setUploadedFile($fileForm['file']);
             }
 
-            $this->dispatch(GalleryImageEvent::IMAGE_UPDATE, $event);
+            $this->dispatch(TheliaEvents::IMAGE_UPDATE, $event);
 
-            $imageUpdated = $event->getModelImage();
+            $imageUpdated = $event->getModel();
 
             $this->adminLogAppend($this->resourceCode, AccessManager::UPDATE, sprintf('Image with Ref %s (ID %d) modified', $imageUpdated->getTitle(), $imageUpdated->getId()));
 
             if ($this->getRequest()->get('save_mode') == 'close') {
-                $redirectUrl = $fileManager->getRedirectionUrl($image->getGalleryId());
-                $this->redirectToRoute($redirectUrl);
+                return $this->generateRedirect(
+                    URL::getInstance()->absoluteUrl($imageModel->getRedirectionUrl($image->getGalleryId()), ['current_tab' => 'images'])
+                );
             } else {
-                $this->redirectSuccess($imageModification);
+                return $this->generateSuccessRedirect($imageModification);
             }
 
         } catch (FormValidationException $e) {
@@ -271,7 +283,9 @@ class ImageController extends BaseAdminController
                 ->setGeneralError($message);
         }
 
-        $redirectUrl = $fileManager->getRedirectionUrl($image->getGalleryId());
+        $redirectUrl = $this->generateRedirect(
+            URL::getInstance()->absoluteUrl($imageModel->getRedirectionUrl($image->getGalleryId()), ['current_tab' => 'images'])
+        );
 
         return $this->render('gallery-image-edit', array(
             'imageId' => $imageId,
@@ -294,7 +308,6 @@ class ImageController extends BaseAdminController
         $this->checkAuth($this->resourceCode, array(), AccessManager::UPDATE);
         $this->checkXmlHttpRequest();
 
-        $fileManager = new GalleryFileManager();
         $imageModelQuery = new GalleryImageQuery();
         $model = $imageModelQuery->findPk($imageId);
 
@@ -310,7 +323,7 @@ class ImageController extends BaseAdminController
         // Dispatch Event to the Action
         try {
             $this->dispatch(
-                GalleryImageEvent::IMAGE_DELETE,
+                TheliaEvents::IMAGE_DELETE,
                 $imageDeleteEvent
             );
 
@@ -374,7 +387,6 @@ class ImageController extends BaseAdminController
         $this->checkAuth($this->resourceCode, array(), AccessManager::UPDATE);
         $this->checkXmlHttpRequest();
 
-        $fileManager = new GalleryFileManager();
         $imageModelQuery = new GalleryImageQuery();
         $model = $imageModelQuery->findPk($imageId);
 
@@ -393,7 +405,7 @@ class ImageController extends BaseAdminController
         // Dispatch Event to the Action
         try {
             $this->dispatch(
-                GalleryImageEvent::IMAGE_UPDATE_POSITION,
+                TheliaEvents::IMAGE_UPDATE_POSITION,
                 $imageUpdateImagePositionEvent
             );
         } catch (\Exception $e) {
@@ -476,12 +488,12 @@ class ImageController extends BaseAdminController
         if (isset($data['visible'])) {
             $model->setVisible($data['visible']);
         }
-        
+
         if (isset($data['url'])) {
             $model->setUrl($data['url']);
         }
 
-        $imageCreateEvent->setModelImage($model);
+        $imageCreateEvent->setModel($model);
 
         return $imageCreateEvent;
     }
@@ -526,7 +538,7 @@ class ImageController extends BaseAdminController
             $queryClass = sprintf("\Thelia\Model\%sQuery", $object);
             $method = new \ReflectionMethod($queryClass, 'create');
             $search = $method->invoke(null);
-            
+
             $method = new \ReflectionMethod($queryClass, $filterMethod);
             $method->invoke($search, $items, Criteria::IN);
 
